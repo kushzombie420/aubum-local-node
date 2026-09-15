@@ -1,88 +1,85 @@
 # Aubum Local Node Architecture
 
-Aubum Local Node is designed to coordinate AI and compute workloads across multiple consumer PCs while keeping hardware, data, permissions, and execution under the user's control.
+Aubum Local Node coordinates AI and compute workloads across multiple consumer PCs while keeping hardware, data, permissions, and execution under the user's control.
 
 ## High-Level Architecture
 
 ```mermaid
 flowchart LR
-    U[User] --> B[Reasoning / Orchestration Layer]
+    U["User"] --> B["Reasoning / Orchestration"]
+    B --> C["Local Node Controller"]
 
-    B --> C[Local Node Controller]
+    C --> W1["Worker PC 1"]
+    C --> W2["Worker PC 2"]
+    C --> W3["Worker PC 3"]
 
-    C --> W1[Worker PC 1]
-    C --> W2[Worker PC 2]
-    C --> W3[Worker PC 3]
+    W1 --> G1["AI / GPU Workloads"]
+    W2 --> G2["Blender / Rendering"]
+    W3 --> G3["Vision / Other Tools"]
 
-    W1 --> G1[GPU / AI Workloads]
-    W2 --> G2[Blender / Rendering]
-    W3 --> G3[Vision / Other Tools]
-
-    G1 --> R[Results]
+    G1 --> R["Results"]
     G2 --> R
     G3 --> R
 
     R --> C
     C --> B
     B --> U
+```
 
-Core Idea
+## Core Idea
 
 The reasoning layer does not need to perform every task itself.
 
-Instead, it can:
+It can:
 
-understand the requested goal;
-determine what capability is required;
-select an appropriate worker;
-prepare the worker and required resources;
-dispatch the job;
-monitor execution;
-collect the result;
-detect failures or incomplete results;
-restore the worker to a known state;
-return the result to the reasoning layer for the next decision.
-Controller Responsibilities
+1. understand the requested goal;
+2. determine the required capability;
+3. select an appropriate worker;
+4. prepare required resources;
+5. dispatch the job;
+6. monitor execution;
+7. collect the result;
+8. detect failures;
+9. restore the worker to a known state;
+10. return the result for the next decision.
+
+## Controller Responsibilities
 
 The Local Node Controller is intended to provide:
 
-worker discovery;
-worker health monitoring;
-capability reporting;
-job routing;
-GPU/resource management;
-execution boundaries;
-job status tracking;
-failure detection;
-state restoration;
-logging and auditability.
-Worker Responsibilities
+- worker discovery;
+- health monitoring;
+- capability reporting;
+- job routing;
+- GPU and resource management;
+- job status tracking;
+- failure detection;
+- state restoration;
+- logging and auditability.
 
-Each worker exposes only the capabilities it is configured to provide.
+## Worker Responsibilities
 
-Examples may include:
+Workers expose only intentionally enabled capabilities.
 
-local LLM inference;
-computer vision;
-Blender automation;
-image generation;
-video generation;
-rendering;
-testing;
-development tools;
-other approved local applications.
+Examples include:
 
-Workers should not require unrestricted control of the entire system.
+- local LLM inference;
+- computer vision;
+- Blender automation;
+- image generation;
+- video generation;
+- rendering;
+- testing;
+- development tools.
 
-State-Aware Execution
+## State-Aware Execution
 
-A major design goal is that a worker should not be left in an unknown or broken state after a job.
+A typical job lifecycle:
 
-A job lifecycle should resemble:
-
+```text
 Inspect current state
         |
-Reserve required resources
+Reserve resources
         |
 Prepare worker
         |
@@ -95,84 +92,64 @@ Validate completion
 Restore previous state
         |
 Release resources
+```
 
-If a job fails, the worker should produce diagnostics and attempt safe restoration rather than silently remaining partially configured.
+Failures should produce diagnostics and attempt safe restoration.
 
-Bounded Autonomy
+## Bounded Autonomy
 
-Aubum Local Node is intended to separate reasoning from privileged execution.
+Workers and controllers should enforce:
 
-The reasoning system may request an action, but workers and controllers should enforce:
+- allowed capabilities;
+- restricted commands;
+- resource limits;
+- validation;
+- logging;
+- approval boundaries;
+- recovery and rollback mechanisms.
 
-allowed capabilities;
-restricted commands;
-resource limits;
-validation;
-logging;
-explicit approval boundaries where appropriate;
-recovery and rollback mechanisms.
+The goal is useful automation without unrestricted machine access.
 
-The goal is useful automation without requiring unlimited machine access.
+## Heterogeneous Hardware
 
-Heterogeneous Hardware
+A local network may contain:
 
-The project is intended to support mixed consumer hardware rather than requiring identical cluster nodes.
+- high-end GPU workstations;
+- older gaming PCs;
+- CPU-only machines;
+- different GPU generations;
+- machines dedicated to particular workloads.
 
-A local network could potentially include:
+Workers report their capabilities so the controller can choose an appropriate system.
 
-high-end GPU workstations;
-older gaming PCs;
-CPU-only machines;
-different GPU generations;
-machines dedicated to specific workloads.
+## Local-First Design
 
-Workers report their available capabilities so the controller can select appropriate systems rather than assuming every computer is identical.
+The core system should remain useful using user-owned hardware without requiring permanent dependence on a cloud provider.
 
-Local-First Design
+## Current Status
 
-Aubum Local Node is intended to remain useful without permanent dependence on an external cloud provider.
+The private Aubum prototype has already been used for:
 
-Optional cloud or remote resources may eventually be supported, but the core system should continue to function using user-owned local hardware.
+- multi-machine job execution;
+- remote Blender automation;
+- GPU workload switching;
+- worker-state restoration;
+- vision workflows;
+- image and video workflows;
+- automated testing;
+- guarded system actions.
 
-Current Status
+The public project is separating reusable infrastructure from that private environment.
 
-The private Aubum prototype has already been used for experiments involving:
+## Public Development Goals
 
-multi-machine job execution;
-remote Blender automation;
-GPU workload switching;
-worker state restoration;
-computer vision;
-image and video workflows;
-automated testing;
-guarded system actions.
-
-This repository is separating the reusable infrastructure from that private environment into a documented open-source project.
-
-Public Development Goals
-
-The public Aubum Local Node project will focus on:
-
-defining a clean worker/controller protocol;
-reproducible worker installation;
-resource and capability discovery;
-reliable job dispatch;
-state management and restoration;
-failure recovery;
-logging and auditing;
-bounded execution controls;
-testing across different consumer hardware;
-deployment documentation for other users.
-
-
-Then scroll down and click:
-
-**Commit changes**
-
-For the commit message, use:
-
-`Add architecture documentation`
-
-Then click **Commit changes** again.
-
-Tiny GitHub trap avoided: yes, the Mermaid block inside the Markdown is intentional. GitHub should render it as an actual diagram instead of forcing you to become a graphic designer for 20 minutes.
+1. Define a clean worker/controller protocol.
+2. Build reproducible worker installation.
+3. Add resource and capability discovery.
+4. Implement reliable job dispatch.
+5. Add state management and restoration.
+6. Add failure recovery.
+7. Add logging and auditing.
+8. Add bounded execution controls.
+9. Test different consumer hardware.
+10. Publish deployment documentation.
