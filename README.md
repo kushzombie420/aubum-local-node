@@ -4,6 +4,12 @@ Aubum Local Node is an open-source project exploring how ordinary consumer PCs a
 
 The project grew out of Aubum, a working private AI orchestration prototype that I am developing independently.
 
+## Project Documentation
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [Current Status](STATUS.md)
+- [Worker Protocol Draft](docs/WORKER_PROTOCOL.md)
+  
 ## Goal
 
 Make it possible for an individual to combine multiple home computers into one practical AI system without requiring enterprise infrastructure or depending entirely on cloud services.
