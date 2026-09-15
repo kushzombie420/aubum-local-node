@@ -7,7 +7,7 @@ The project grew out of Aubum, a working private AI orchestration prototype that
 ## Project Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
-- [Current Status](STATUS.md)
+- [Current Status](docs/STATUS.md)
 - [Worker Protocol Draft](docs/WORKER_PROTOCOL.md)
   
 ## Goal
