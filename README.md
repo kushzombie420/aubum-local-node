@@ -34,7 +34,7 @@ The private Aubum prototype already includes working experiments with:
 - Guarded system automation
 - Local network orchestration
 
-- ### Verified Deployment Topology — September 2026
+ ### Verified Deployment Topology — September 2026
 
 The private Aubum system is currently operating across a heterogeneous five-device environment:
 
