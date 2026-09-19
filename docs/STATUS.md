@@ -18,6 +18,18 @@ The private Aubum environment has already been used for:
 - guarded local tool execution;
 - local-network communication between AI and worker systems.
 
+ ### Current verified deployment
+
+As of September 2026, the private Aubum environment is operating across five heterogeneous devices:
+
+- **MAIN PC** — primary Big Brain, orchestration, reasoning, and system control
+- **Herman** — RTX 4090 worker handling Blender, 3D generation, image/video workflows, and heavy GPU execution
+- **RTX 3070 PC** — dedicated voice and audio workloads
+- **Steam Deck** — lightweight local routing node using Vulkan-accelerated inference
+- **Android phone** — remote control interface for MAIN and Aubum services
+
+This deployment demonstrates specialized roles operating across Windows PCs, AMD handheld hardware, and a mobile control device rather than relying on identical desktop workers.
+
 These capabilities are currently part of a private development environment and are not yet represented as a clean public implementation.
 
 ## Public repository status
