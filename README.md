@@ -34,6 +34,20 @@ The private Aubum prototype already includes working experiments with:
 - Guarded system automation
 - Local network orchestration
 
+- ### Verified Deployment Topology — September 2026
+
+The private Aubum system is currently operating across a heterogeneous five-device environment:
+
+- **MAIN PC** — Big Brain / primary orchestration, reasoning, and system control
+- **Herman** — RTX 4090 worker for Blender, 3D generation, image/video workflows, and heavy GPU execution
+- **RTX 3070 PC** — dedicated voice and audio workloads
+- **Steam Deck** — lightweight Aubum router running a small local model with Vulkan acceleration
+- **Android phone** — remote control interface for MAIN and Aubum services
+
+The current system has demonstrated cross-device routing, remote execution, managed GPU workload modes, worker-state restoration, lightweight model-based routing, and phone-based control across heterogeneous consumer hardware.
+
+This deployment remains part of the private Aubum development environment. The public Aubum Local Node project is extracting the reusable infrastructure into a standalone open-source implementation.
+
 ## Aubum Local Node
 
 This repository will focus specifically on the reusable local-compute infrastructure.
