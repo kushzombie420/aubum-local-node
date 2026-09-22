@@ -34,6 +34,10 @@ The private Aubum prototype already includes working experiments with:
 - dedicated voice workloads;
 - lightweight model-based routing;
 - phone-based control and visual input;
+- live phone-camera preview with automatic start/stop;
+- direct desktop monitor observation;
+- condition-aware visual task supervision;
+- saved visual evidence and follow-up reinspection;
 - independent health monitoring;
 - persistent cross-machine memory;
 - guarded system automation;
@@ -69,6 +73,24 @@ The current private health-check system includes the Guarddog/Memory node and ha
 - **0 failures**
 
 The health checker is read-only.
+
+### Visual observation and supervision
+
+The private prototype now supports two complementary visual paths:
+
+- **Phone / camera vision** for live real-world input from the Android phone, including a persistent preview service and bounded Watch Live sessions with automatic camera start/stop.
+- **Desktop vision** for direct observation of Windows displays without pointing the phone at a monitor.
+
+Recent verified behavior includes:
+
+- short bounded desktop views;
+- condition-aware monitoring that can report when a requested visual change occurs;
+- saved before/after frames and contact sheets;
+- follow-up reinspection of saved visual evidence without requiring the user to upload another screenshot;
+- explicit routing between screen/display requests and phone/camera requests;
+- conservative handling of screen-within-screen scenes to reduce unsupported visual narratives.
+
+This allows Aubum to observe a display, detect a change, retain the relevant visual evidence, and answer later questions about what it saw.
 
 ### Persistent cross-machine Memory
 
