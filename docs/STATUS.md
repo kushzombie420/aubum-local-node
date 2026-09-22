@@ -21,6 +21,10 @@ The private Aubum environment has already been used for:
 - lightweight model-based routing;
 - phone-based remote control;
 - live and recorded video input;
+- persistent phone-camera preview with automatic start/stop;
+- direct desktop monitor capture;
+- condition-aware visual task supervision;
+- saved visual evidence and follow-up reinspection;
 - guarded local tool execution;
 - independent health monitoring;
 - persistent cross-machine memory;
@@ -80,6 +84,28 @@ The private system has verified:
 This means the Big Brain can deliberately store durable information in one session and retrieve it later from persistent external Memory rather than depending only on current conversation context.
 
 Automatic relevance-based recall and selective automatic memory writing remain future work.
+
+### Visual supervision and continuity
+
+The private prototype now supports direct visual supervision of both real-world and desktop sources.
+
+Verified behavior includes:
+
+- a persistent phone preview service for the Android phone camera;
+- bounded Watch Live sessions that automatically start and stop the phone camera;
+- direct capture of Windows displays without routing through the phone camera;
+- short bounded screen views for quick inspection;
+- condition-aware monitoring that can stop when a requested visual change is detected;
+- saved per-cycle frames and contact sheets;
+- follow-up reinspection of saved supervisor evidence by the vision worker;
+- routing rules that separate display/monitor/screen/window requests from camera/phone/mobile/webcam requests;
+- screen-within-screen grounding rules to reduce unsupported identity and scene claims.
+
+A verified continuity test demonstrated the sequence:
+
+**observe display → detect change → save evidence → re-inspect evidence → answer a follow-up question about the prior visual state**
+
+Memory writes and corrective actions remain disabled in the visual supervisor while the observation and evidence pipeline is being hardened.
 
 ### Health checking
 
@@ -144,7 +170,6 @@ The following are goals, not finished public features:
 - broad hardware compatibility;
 - automatic relevance-based memory retrieval;
 - selective automatic memory writing;
-- autonomous visual evaluation;
 - unattended long-running workflows;
 - autonomous recovery across all services;
 - cloud/local hybrid routing;
