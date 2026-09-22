@@ -21,7 +21,7 @@ flowchart LR
     H --> G1["Vision / Blender / 3D / Image / Video"]
     V --> G2["Voice / Audio"]
     D --> G3["Lightweight Routing"]
-    P --> G4["Remote Control / Edge Tasks"]
+    P --> G4["Remote Control / Camera Vision"]
 
     W["Guarddog / Watchdog"] --> C
     W --> H
@@ -155,6 +155,29 @@ The phone currently participates as:
 - a live camera / sensor source.
 
 This allows Aubum to interact with the system away from the primary desktop while also providing visual input for vision workflows.
+
+## Visual Observation and Evidence Continuity
+
+The private prototype separates **camera vision** from **desktop vision** rather than treating every request containing the word "watch" as the same capability.
+
+Current routing intent:
+
+- **camera / phone / mobile / webcam / S25** → bounded live camera observation;
+- **display / monitor / desktop / screen / window** → direct desktop observation;
+- short screen-view requests use a bounded multi-frame inspection;
+- longer requests use condition-aware visual supervision.
+
+A desktop supervision cycle can:
+
+1. capture a selected display directly;
+2. sample multiple frames over a bounded interval;
+3. classify whether meaningful progress or change occurred;
+4. stop when the user-requested visual condition is satisfied;
+5. save the relevant frames and contact sheet;
+6. expose those evidence paths for later reinspection;
+7. let the vision worker answer follow-up questions from the saved evidence rather than requiring a new screenshot.
+
+This creates visual continuity across turns while preserving a known-good observation-only baseline. Memory writes and corrective actions remain separately gated.
 
 ## Controller Responsibilities
 
@@ -316,6 +339,9 @@ The private Aubum prototype has already demonstrated:
 - lightweight model-based routing;
 - phone-based control;
 - live and recorded video input;
+- direct desktop monitor observation;
+- condition-aware visual task supervision;
+- saved visual evidence and follow-up reinspection;
 - independent system monitoring;
 - cross-machine persistent memory;
 - cross-session memory retrieval;
