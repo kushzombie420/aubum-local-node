@@ -89,6 +89,7 @@ Recent verified behavior includes:
 - follow-up reinspection of saved visual evidence without requiring the user to upload another screenshot;
 - explicit routing between screen/display requests and phone/camera requests;
 - conservative handling of screen-within-screen scenes to reduce unsupported visual narratives.
+- a live desktop supervision test that successfully observed text while it was actively being typed into a window, confirming the capture/vision path can detect in-progress screen changes; timing remains sensitive and is still being hardened.
 
 This allows Aubum to observe a display, detect a change, retain the relevant visual evidence, and answer later questions about what it saw.
 

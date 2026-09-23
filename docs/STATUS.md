@@ -100,6 +100,7 @@ Verified behavior includes:
 - follow-up reinspection of saved supervisor evidence by the vision worker;
 - routing rules that separate display/monitor/screen/window requests from camera/phone/mobile/webcam requests;
 - screen-within-screen grounding rules to reduce unsupported identity and scene claims.
+- a live desktop test in which the supervisor successfully observed text while it was actively being typed into a window, verifying in-progress screen-change detection; the capture timing window is still sensitive and is not yet treated as a reliability guarantee.
 
 A verified continuity test demonstrated the sequence:
 
