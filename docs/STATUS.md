@@ -19,6 +19,7 @@ The private Aubum environment has already been used for:
 - result and artifact generation;
 - dedicated voice and audio workloads;
 - lightweight model-based routing;
+- on-demand small-model / Big-Brain routing with automatic wake/sleep and idle GPU release;
 - phone-based remote control;
 - live and recorded video input;
 - persistent phone-camera preview with automatic start/stop;
@@ -47,6 +48,25 @@ This deployment demonstrates specialized roles operating across Windows PCs, AMD
 These capabilities are currently part of a private development environment and are not yet represented as a clean public implementation.
 
 ## Recently verified private milestones
+
+### On-demand reasoning and GPU power management
+
+The private system now has a production routing layer that keeps the primary 27B reasoning model unloaded until a request actually needs it.
+
+Verified behavior:
+
+- Open WebUI connects through a production Sentinel rather than directly to the Big Brain;
+- simple requests are handled by the Steam Deck's Qwen3-1.7B router;
+- complex requests are routed to a production Gatekeeper that wakes the 27B model on demand;
+- duplicate wake/process protection prevents multiple copies of the Big Brain from launching;
+- active-request protection prevents sleep while work is still being served;
+- the Big Brain automatically unloads after 900 seconds of inactivity;
+- Open WebUI model polling and housekeeping requests such as title generation, follow-up suggestions, and tag generation are kept on the SMALL path so they do not wake the 27B;
+- health checks report Sentinel, Gatekeeper, Big Brain state, active requests, and idle timeout without waking the Big Brain;
+- an end-to-end Open WebUI arithmetic test was answered by the Steam Deck while the primary RTX 4090 remained free;
+- a complex Unreal Engine debugging request was verified to take the BIG route.
+
+The current production health check reports the routing/power stack alongside the existing distributed services. A recent run after this integration completed with 20 passing checks, 0 warnings, and 0 failures.
 
 ### Guarddog and independent monitoring
 
@@ -114,7 +134,7 @@ The private Aubum health-check system currently verifies the main distributed se
 
 A recent full-system run completed with:
 
-- 27 passing checks;
+- 20 passing checks;
 - 0 warnings;
 - 0 failures.
 
