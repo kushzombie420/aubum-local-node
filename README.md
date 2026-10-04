@@ -34,6 +34,8 @@ The private Aubum prototype already includes working experiments with:
 - dedicated voice workloads;
 - lightweight model-based routing;
 - on-demand small-model / Big-Brain routing with automatic wake/sleep and idle GPU release;
+- CUDA-accelerated primary-model inference on the RTX 4090;
+- PDF/document text extraction for local document reading;
 - live web research with source citations;
 - local chat control commands for status and Big-Brain sleep;
 - phone-based control and visual input;
@@ -63,6 +65,18 @@ The current system has demonstrated specialized roles across Windows PCs, AMD ha
 This deployment remains part of the private Aubum development environment. The public Aubum Local Node project is extracting the reusable infrastructure into a standalone open-source implementation.
 
 ## Recent Verified Milestones
+
+### CUDA inference acceleration and PDF reading
+
+The private prototype's primary 27B Big Brain now runs through a CUDA-enabled llama.cpp build on the RTX 4090.
+
+A direct before/after benchmark on the same model and hardware measured:
+
+- generation speed increasing from approximately **5.71 tok/s on Vulkan to 42.57 tok/s on CUDA**, about a **7.5x increase**;
+- prompt-processing throughput increasing from approximately **919.5 tok/s to 2775.6 tok/s**, about a **3x increase**;
+- the production Big Brain remaining operational with the existing 32K-context setup after the backend change.
+
+The private prototype also now supports local PDF/document reading through text extraction, allowing Aubum to ingest and reason over PDF content rather than relying only on manually pasted text.
 
 ### On-demand reasoning and GPU power management
 
