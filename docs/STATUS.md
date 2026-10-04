@@ -20,6 +20,8 @@ The private Aubum environment has already been used for:
 - dedicated voice and audio workloads;
 - lightweight model-based routing;
 - on-demand small-model / Big-Brain routing with automatic wake/sleep and idle GPU release;
+- live web research with source citations;
+- local chat control for Big-Brain status and sleep;
 - phone-based remote control;
 - live and recorded video input;
 - persistent phone-camera preview with automatic start/stop;
@@ -67,6 +69,21 @@ Verified behavior:
 - a complex Unreal Engine debugging request was verified to take the BIG route.
 
 The current production health check reports the routing/power stack alongside the existing distributed services. A recent run after this integration completed with 20 passing checks, 0 warnings, and 0 failures.
+
+### Web research and conversational resource control
+
+The private prototype now supports live web research from Open WebUI while preserving the on-demand Big Brain architecture.
+
+Verified behavior:
+
+- a fresh web-search request can wake the 27B model and use current web results;
+- answers can include source citations;
+- the local `status` command is handled without Big Brain inference and reports Big Brain state, active requests, and idle timing;
+- the local `sleep` command is handled by Sentinel and delegated to a Gatekeeper control endpoint;
+- Gatekeeper retains ownership of the shutdown path, including active-request and wake-state safety checks;
+- chat-controlled sleep has been verified to unload the primary 27B model from RTX 4090 VRAM.
+
+The current implementation intentionally avoids adding a separate hard-coded web-search routing rule until real behavior demonstrates one is necessary.
 
 ### Guarddog and independent monitoring
 
