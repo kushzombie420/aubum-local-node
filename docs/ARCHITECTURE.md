@@ -108,6 +108,8 @@ A Steam Deck operates as a lightweight routing node using a small local model wi
 
 Its role is to perform inexpensive routing and classification work without consuming the primary Big Brain or high-end GPU workers.
 
+In the current private deployment, Open WebUI sends model traffic through a local Sentinel. The Sentinel can keep simple user requests and Open WebUI housekeeping on the Steam Deck path, while complex requests are forwarded to a Gatekeeper that wakes the primary 27B model only when required. The Gatekeeper tracks active work and unloads the Big Brain after an idle timeout so MAIN's RTX 4090 VRAM is not occupied unnecessarily.
+
 ### Guarddog + Memory Laptop
 
 A dedicated laptop provides two infrastructure roles.
@@ -216,6 +218,32 @@ Examples include:
 Not every worker needs every capability.
 
 Aubum intentionally assigns specialized roles to different hardware.
+
+## On-Demand Reasoning Path
+
+The private prototype now separates inexpensive classification/routing work from expensive primary-model inference.
+
+```text
+Open WebUI
+    |
+    v
+Sentinel
+  |        \
+SMALL      BIG
+  |         |
+Steam Deck  Gatekeeper
+Qwen3-1.7B      |
+                v
+          wake primary 27B
+                |
+             answer
+                |
+      idle timeout -> unload
+```
+
+The production path is designed so that model discovery, health checks, and known Open WebUI housekeeping requests do not wake the Big Brain. Duplicate-launch protection and active-request protection prevent unnecessary parallel loads or premature sleep.
+
+This is an example of resource-aware orchestration: the routing layer decides not only *where* work should run, but whether a high-cost model should be resident in GPU memory at all.
 
 ## State-Aware Execution
 
