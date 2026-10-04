@@ -37,6 +37,7 @@ The private Aubum prototype already includes working experiments with:
 - live web research with source citations;
 - local chat control commands for status and Big-Brain sleep;
 - phone-based control and visual input;
+- secure remote mobile access over cellular through a private Tailscale connection;
 - live phone-camera preview with automatic start/stop;
 - direct desktop monitor observation;
 - condition-aware visual task supervision;
@@ -94,6 +95,21 @@ Verified behavior includes:
 - the chat-controlled sleep path was verified to release the primary model from RTX 4090 VRAM.
 
 This keeps user-facing control in the chat interface while leaving resource ownership and safety checks inside the Gatekeeper.
+
+### Secure remote mobile access
+
+The private prototype now supports remote Aubum access from the Android phone over cellular and other non-home networks.
+
+Verified behavior includes:
+
+- the phone and MAIN join the same private Tailscale network;
+- Open WebUI remains bound to localhost on MAIN rather than being exposed directly to the LAN or public internet;
+- Tailscale Serve publishes a private HTTPS endpoint available only inside the tailnet;
+- the Android phone successfully opened Open WebUI and used Aubum over cellular with Wi-Fi disabled;
+- the existing local access path remains available as a fallback;
+- manual Taildrop file transfer from MAIN to the phone was also verified.
+
+This extends the phone from a local-network controller into a secure remote interface without opening a public inbound port to Open WebUI.
 
 ### Independent Guarddog monitoring
 
