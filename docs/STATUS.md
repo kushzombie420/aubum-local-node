@@ -39,7 +39,7 @@ The private Aubum environment has already been used for:
 
 ## Current verified deployment
 
-As of September 2026, the private Aubum environment is operating across six heterogeneous devices:
+As of October 2026, the private Aubum environment is operating across six heterogeneous devices:
 
 - **MAIN PC** — primary Big Brain, orchestration, reasoning, Open WebUI, system control, and health aggregation
 - **Herman** — RTX 4090 worker handling vision, Blender, 3D generation, image/video workflows, rendering, and other heavy GPU execution
@@ -85,7 +85,7 @@ Verified behavior:
 - an end-to-end Open WebUI arithmetic test was answered by the Steam Deck while the primary RTX 4090 remained free;
 - a complex Unreal Engine debugging request was verified to take the BIG route.
 
-The current production health check reports the routing/power stack alongside the existing distributed services. A recent run after this integration completed with 20 passing checks, 0 warnings, and 0 failures.
+The current production health check reports the routing/power stack alongside the existing distributed services. Health Check v0.5 now also verifies the secure remote-mobile layer. A verified run completed with 27 passing checks, 0 warnings, and 0 failures.
 
 ### Web research and conversational resource control
 
@@ -180,15 +180,42 @@ Memory writes and corrective actions remain disabled in the visual supervisor wh
 
 ### Health checking
 
-The private Aubum health-check system currently verifies the main distributed services, including the Guarddog/Memory laptop.
+The private Aubum health-check system currently verifies the main distributed services, including the Guarddog/Memory laptop, routing/power state, and secure remote-mobile access.
 
-A recent full-system run completed with:
+Health Check v0.5 adds checks for:
 
-- 20 passing checks;
+- the Tailscale Windows service and client;
+- active tailnet connection;
+- Tailscale Serve remaining tailnet-only;
+- the Serve proxy still targeting localhost Open WebUI;
+- Open WebUI remaining bound to localhost;
+- a successful local Open WebUI HTTP response.
+
+Phone-online state is intentionally not required, so a powered-off or disconnected phone does not make the infrastructure unhealthy.
+
+A verified full-system run completed with:
+
+- 27 passing checks;
 - 0 warnings;
 - 0 failures.
 
 The health checker remains read-only.
+
+## Near-term private prototype roadmap
+
+The current near-term infrastructure backlog is:
+
+1. **Storage cleanup and reorganization** before attempting Linux sideloading, so large AI/model/game-development files are intentionally placed instead of being dragged through another operating-system experiment.
+2. **Linux sideloading experiment** after storage is cleaned and free-space/partition requirements are understood.
+3. **Herman VRAM cleanup** using the same on-demand load / protected active-job / idle-unload pattern proven on MAIN, without disturbing Herman's known-good worker modes.
+4. **RTX 3070 voice pipeline** for STT, Aubum response, TTS, and optional voice conversion on the dedicated voice machine.
+5. **Generated-image retention cleanup**: keep Open WebUI preview/manual download behavior, then add bounded automatic cleanup of old generated files instead of automatic phone transfer.
+6. **Portable phone bridge** for temporarily attaching a bounded Aubum worker/helper through the phone when using another PC.
+7. **Music/audio generation** as a later specialist capability.
+8. **Public presentation/promotion pass** with a cleaner architecture diagram, screenshots, and a short reproducible demo of SMALL routing, BIG wake/sleep, web research, and remote mobile access.
+9. **Smarter Memory** with relevance-based recall and selective automatic writes after the current explicit persistent-memory baseline remains stable.
+
+Unreal/character/game-development work remains a separate roadmap so infrastructure tasks do not quietly swallow the game-development checklist.
 
 ## Public repository status
 
