@@ -23,6 +23,7 @@ The private Aubum environment has already been used for:
 - live web research with source citations;
 - local chat control for Big-Brain status and sleep;
 - phone-based remote control;
+- secure remote Open WebUI/Aubum access over cellular through a private Tailscale connection;
 - live and recorded video input;
 - persistent phone-camera preview with automatic start/stop;
 - direct desktop monitor capture;
@@ -84,6 +85,22 @@ Verified behavior:
 - chat-controlled sleep has been verified to unload the primary 27B model from RTX 4090 VRAM.
 
 The current implementation intentionally avoids adding a separate hard-coded web-search routing rule until real behavior demonstrates one is necessary.
+
+### Secure remote mobile access
+
+The Android phone can now reach the private Aubum/Open WebUI interface from outside the home network.
+
+Verified behavior:
+
+- MAIN and the phone are connected through Tailscale;
+- Open WebUI remains bound to localhost on MAIN;
+- Tailscale Serve provides a private HTTPS endpoint restricted to the tailnet;
+- the phone successfully connected to Open WebUI over cellular with Wi-Fi disabled;
+- no public Open WebUI port was opened;
+- the pre-existing local access path remains available;
+- manual Taildrop transfer from MAIN to the phone was verified.
+
+Generated images remain previewable and manually downloadable through Open WebUI on mobile. Automatic permanent image-transfer/retention behavior is intentionally deferred rather than adding more background plumbing before it is needed.
 
 ### Guarddog and independent monitoring
 
