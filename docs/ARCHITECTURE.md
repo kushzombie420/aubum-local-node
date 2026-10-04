@@ -245,6 +245,20 @@ The production path is designed so that model discovery, health checks, and know
 
 This is an example of resource-aware orchestration: the routing layer decides not only *where* work should run, but whether a high-cost model should be resident in GPU memory at all.
 
+### Conversational resource control
+
+The current private implementation also exposes a small control surface through chat.
+
+`status` is intercepted locally by Sentinel and reports routing state without requiring Big Brain inference.
+
+`sleep` is also intercepted locally, but Sentinel does not directly terminate the model. Instead it calls a local Gatekeeper control endpoint. Gatekeeper then applies the same request-safety checks used by automatic idle sleep before invoking the existing Big Brain shutdown path.
+
+This keeps conversational convenience separate from resource ownership: Sentinel recognizes the command, while Gatekeeper remains authoritative for whether the primary model may safely unload.
+
+### Web research path
+
+Open WebUI web search is enabled in the private deployment for current-information requests. Verified search responses can include citations, and a fresh web-research request can wake the primary 27B reasoning model for synthesis while preserving the normal idle-unload behavior afterward.
+
 ## State-Aware Execution
 
 A typical job lifecycle:
