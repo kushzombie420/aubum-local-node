@@ -33,6 +33,7 @@ The private Aubum prototype already includes working experiments with:
 - 3D-generation tooling;
 - dedicated voice workloads;
 - lightweight model-based routing;
+- on-demand small-model / Big-Brain routing with automatic wake/sleep and idle GPU release;
 - phone-based control and visual input;
 - live phone-camera preview with automatic start/stop;
 - direct desktop monitor observation;
@@ -59,6 +60,23 @@ The current system has demonstrated specialized roles across Windows PCs, AMD ha
 This deployment remains part of the private Aubum development environment. The public Aubum Local Node project is extracting the reusable infrastructure into a standalone open-source implementation.
 
 ## Recent Verified Milestones
+
+### On-demand reasoning and GPU power management
+
+The private prototype now uses a local Sentinel and Gatekeeper path between Open WebUI and the primary Big Brain.
+
+Verified behavior includes:
+
+- simple requests and Open WebUI housekeeping can be handled by the Steam Deck's Qwen3-1.7B router without loading the primary 27B model;
+- complex requests route through a production Gatekeeper that wakes the 27B model only when needed;
+- duplicate wake/process protection prevents repeated model launches;
+- active-request protection prevents the Big Brain from being put to sleep while work is still running;
+- the Big Brain unloads automatically after 15 minutes of inactivity, releasing RTX 4090 VRAM;
+- model-list polling, automatic chat-title generation, follow-up suggestions, tags, and health checks no longer wake the Big Brain unnecessarily;
+- an end-to-end Open WebUI test confirmed a simple arithmetic request was answered by the Steam Deck while the Big Brain remained asleep;
+- a complex Unreal Engine debugging request was verified to take the BIG route and wake the primary reasoning model.
+
+This turns the primary reasoning model into an on-demand resource rather than a permanently loaded GPU resident while preserving a single Open WebUI entry point.
 
 ### Independent Guarddog monitoring
 
