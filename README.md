@@ -34,6 +34,8 @@ The private Aubum prototype already includes working experiments with:
 - dedicated voice workloads;
 - lightweight model-based routing;
 - on-demand small-model / Big-Brain routing with automatic wake/sleep and idle GPU release;
+- live web research with source citations;
+- local chat control commands for status and Big-Brain sleep;
 - phone-based control and visual input;
 - live phone-camera preview with automatic start/stop;
 - direct desktop monitor observation;
@@ -78,6 +80,21 @@ Verified behavior includes:
 
 This turns the primary reasoning model into an on-demand resource rather than a permanently loaded GPU resident while preserving a single Open WebUI entry point.
 
+### Web research and conversational resource control
+
+The private prototype now supports live web research through Open WebUI while retaining the on-demand reasoning path.
+
+Verified behavior includes:
+
+- a current-information web query can invoke web search and wake the primary 27B model for synthesis;
+- web-search answers can return source citations;
+- a local `status` command reports Big Brain state, active requests, and idle timing without requiring Big Brain inference;
+- a local `sleep` command is intercepted by Sentinel and handed to Gatekeeper;
+- Gatekeeper performs the actual protected Big Brain shutdown using the same sleep path as automatic idle unload;
+- the chat-controlled sleep path was verified to release the primary model from RTX 4090 VRAM.
+
+This keeps user-facing control in the chat interface while leaving resource ownership and safety checks inside the Gatekeeper.
+
 ### Independent Guarddog monitoring
 
 A dedicated laptop now runs an observation-only Guarddog service that independently monitors major Aubum components.
@@ -86,7 +103,7 @@ MAIN can also verify Guarddog itself, avoiding a design where the monitoring lay
 
 The current private health-check system includes the Guarddog/Memory node and has completed a full-system run with:
 
-- **27 passing checks**
+- **20 passing checks**
 - **0 warnings**
 - **0 failures**
 
