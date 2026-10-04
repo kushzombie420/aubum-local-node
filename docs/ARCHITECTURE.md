@@ -349,6 +349,10 @@ MAIN checks Guarddog
 Guarddog checks local Memory
 ```
 
+Health Check v0.5 now verifies the distributed services plus the secure remote-mobile boundary. Its added checks cover the Tailscale service/client, active tailnet connection, tailnet-only Serve configuration, localhost-only Open WebUI binding, and local HTTP response. The phone itself is not required to be online for infrastructure health.
+
+A verified v0.5 run completed with **27 PASS / 0 WARN / 0 FAIL**.
+
 Future work will add carefully bounded recovery actions after repeated failures are confirmed.
 
 ## Bounded Autonomy
@@ -440,8 +444,10 @@ The private Aubum prototype has already demonstrated:
 - independent system monitoring;
 - cross-machine persistent memory;
 - cross-session memory retrieval;
-- automated health checking;
-- guarded system actions.
+- automated health checking, including secure remote-mobile boundary checks;
+- guarded system actions;
+- live web research with source citations;
+- local chat status/sleep resource controls.
 
 The public project is separating reusable infrastructure from that private environment.
 
