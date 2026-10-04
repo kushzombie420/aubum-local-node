@@ -149,12 +149,19 @@ The Big Brain can write a memory during one session and retrieve it from a fresh
 
 ### Android Phone
 
+The phone can now participate both on the local network and remotely over a private Tailscale connection.
+
 The phone currently participates as:
 
 - a remote control interface;
 - an edge compute node;
 - a recorded-video source;
-- a live camera / sensor source.
+- a live camera / sensor source;
+- a secure remote Open WebUI/Aubum interface over cellular or other external networks.
+
+Remote access is provided through Tailscale. Open WebUI remains bound to localhost on MAIN, while Tailscale Serve exposes a private HTTPS endpoint only to authenticated tailnet devices. This avoids opening a public inbound Open WebUI port while allowing the phone to reach Aubum away from home.
+
+Manual Taildrop file transfer from MAIN to the phone has also been verified. Generated images can be previewed and manually downloaded from Open WebUI on mobile; automatic permanent image-transfer and retention policies remain deferred.
 
 This allows Aubum to interact with the system away from the primary desktop while also providing visual input for vision workflows.
 
@@ -359,6 +366,33 @@ A local network may contain:
 
 Workers report their capabilities so the controller can choose an appropriate system rather than requiring identical hardware.
 
+## Secure Remote Access
+
+The private deployment extends local-first operation with a private remote-access layer rather than directly exposing local services to the public internet.
+
+Current verified path:
+
+```text
+Android phone on cellular
+        |
+        v
+Private Tailscale network
+        |
+        v
+Tailscale Serve HTTPS endpoint
+        |
+        v
+Open WebUI on MAIN
+(bound to localhost)
+        |
+        v
+Aubum routing / tools / Big Brain
+```
+
+The phone was verified to use Open WebUI over cellular with Wi-Fi disabled. The local Open WebUI service remains localhost-bound, and the remote HTTPS endpoint is restricted to the tailnet.
+
+This keeps the local service boundary intact while adding remote usability.
+
 ## Local-First Design
 
 The core system should remain useful using user-owned hardware without requiring permanent dependence on a cloud provider.
@@ -380,6 +414,7 @@ The private Aubum prototype has already demonstrated:
 - dedicated voice workloads;
 - lightweight model-based routing;
 - phone-based control;
+- secure remote mobile access over cellular through a private tailnet;
 - live and recorded video input;
 - direct desktop monitor observation;
 - condition-aware visual task supervision;
