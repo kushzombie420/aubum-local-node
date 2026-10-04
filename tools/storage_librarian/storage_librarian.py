@@ -1,149 +1,94 @@
 #!/usr/bin/env python3
+"""Storage Librarian - Phase 1.
+
+Read-only scanner. Given a folder path, reports the 20 largest immediate
+subfolders and the 30 largest files.  Nothing is moved, deleted, renamed,
+modified, hashed, or categorised.
 """
-Storage Librarian v0.1
-
-Read-only storage analyzer extracted from the private Aubum prototype.
-
-Given a target directory, it:
-- recursively totals each immediate subfolder;
-- prints progress while scanning;
-- lists the 20 largest immediate subfolders;
-- lists the 30 largest immediate files.
-
-It does not move, delete, rename, hash, or otherwise modify user data.
-"""
-
-from __future__ import annotations
 
 import os
-import stat
 import sys
-from pathlib import Path
 
-TOP_FOLDERS = 20
-TOP_FILES = 30
-
-
-def format_size(size_bytes: int) -> str:
-    units = ("B", "KiB", "MiB", "GiB", "TiB")
-    value = float(size_bytes)
-
-    for unit in units:
-        if value < 1024 or unit == units[-1]:
-            if unit == "B":
-                return f"{int(value):,} B"
-            return f"{value:,.0f} {unit}"
-        value /= 1024
-
-    return f"{size_bytes:,} B"
+TOP_N_SUBFOLDERS = 20
+TOP_N_FILES = 30
 
 
-def is_reparse_point(entry: os.DirEntry[str]) -> bool:
-    """Avoid following Windows junctions/reparse points during recursive scans."""
-    try:
-        attrs = getattr(entry.stat(follow_symlinks=False), "st_file_attributes", 0)
-        flag = getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0)
-        return bool(flag and attrs & flag)
-    except OSError:
-        return False
+def _humanize(nbytes: int) -> str:
+    for unit in ("B", "KiB", "MiB", "GiB", "TiB"):
+        if abs(nbytes) < 1024:
+            return f"{nbytes:>10,.0f} {unit}"
+        nbytes /= 1024
+    return f"{nbytes:>10,.2f} PiB"
 
 
-def folder_size(path: Path) -> int:
-    total = 0
-    pending = [path]
+def _scan(path: str):
+    path = os.path.abspath(path)
+    if not os.path.isdir(path):
+        print(f"Error: '{path}' is not a directory.", file=sys.stderr)
+        sys.exit(1)
 
-    while pending:
-        current = pending.pop()
+    subfolder_sizes: list[tuple[str, int]] = []
+    file_sizes: list[tuple[str, int]] = []
 
+    for entry in os.scandir(path):
         try:
-            with os.scandir(current) as entries:
-                for entry in entries:
-                    try:
-                        if entry.is_symlink() or is_reparse_point(entry):
-                            continue
+            if entry.is_dir(follow_symlinks=False):
+                print(f"Scanning: {entry.path}")
+                total = 0
+                for dirpath, _dirnames, filenames in os.walk(
+                    entry.path, followlinks=False
+                ):
+                    for fname in filenames:
+                        fp = os.path.join(dirpath, fname)
+                        try:
+                            total += os.path.getsize(fp)
+                        except (OSError, ValueError):
+                            pass
+                print(f"  {entry.name}: {_humanize(total)}")
+                subfolder_sizes.append((entry.name, total))
+            elif entry.is_file(follow_symlinks=False):
+                try:
+                    sz = entry.stat().st_size
+                    file_sizes.append((entry.name, sz))
+                except (OSError, ValueError):
+                    pass
+        except (OSError, ValueError):
+            pass
 
-                        if entry.is_file(follow_symlinks=False):
-                            total += entry.stat(follow_symlinks=False).st_size
-                        elif entry.is_dir(follow_symlinks=False):
-                            pending.append(Path(entry.path))
-                    except (OSError, PermissionError):
-                        continue
-        except (OSError, PermissionError):
-            continue
+    subfolder_sizes.sort(key=lambda x: x[1], reverse=True)
+    file_sizes.sort(key=lambda x: x[1], reverse=True)
 
-    return total
-
-
-def scan(target: Path) -> tuple[list[tuple[int, str]], list[tuple[int, str]]]:
-    folders: list[tuple[int, str]] = []
-    files: list[tuple[int, str]] = []
-
-    try:
-        entries = sorted(target.iterdir(), key=lambda p: p.name.casefold())
-    except OSError as exc:
-        raise RuntimeError(f"Could not read target: {target}: {exc}") from exc
-
-    for entry in entries:
-        try:
-            if entry.is_dir() and not entry.is_symlink():
-                print(f"Scanning: {entry}")
-                size = folder_size(entry)
-                print(f"  {entry.name}: {format_size(size):>12}")
-                folders.append((size, entry.name))
-            elif entry.is_file():
-                files.append((entry.stat().st_size, entry.name))
-        except (OSError, PermissionError):
-            continue
-
-    folders.sort(reverse=True, key=lambda item: item[0])
-    files.sort(reverse=True, key=lambda item: item[0])
-    return folders, files
+    return (
+        path,
+        subfolder_sizes[:TOP_N_SUBFOLDERS],
+        file_sizes[:TOP_N_FILES],
+    )
 
 
-def print_ranked(title: str, rows: list[tuple[int, str]], name_label: str) -> None:
+def main():
+    target = sys.argv[1] if len(sys.argv) > 1 else "."
+    root, top_dirs, top_files = _scan(target)
+
     print()
-    print(title)
-    print(f"{'Rank':<6}{'Size':>14}  {name_label}")
+    print(f"Storage Librarian  Phase 1  (read-only)")
+    print(f"Scanning: {root}")
+    print()
+
+    # --- Subfolders ---
+    print(f"Top {TOP_N_SUBFOLDERS} largest subfolders:")
+    print(f"{'Rank':<6}{'Size':>14}  Folder")
     print("-" * 50)
-
-    for rank, (size, name) in enumerate(rows, start=1):
-        print(f"{rank:<6}{format_size(size):>14}  {name}")
-
-
-def main() -> int:
-    if len(sys.argv) != 2:
-        print("Usage: python storage_librarian.py <folder>")
-        return 2
-
-    target = Path(sys.argv[1]).expanduser()
-
-    if not target.exists():
-        print(f"Target does not exist: {target}")
-        return 2
-
-    if not target.is_dir():
-        print(f"Target is not a directory: {target}")
-        return 2
-
-    folders, files = scan(target)
-
+    for i, (name, size) in enumerate(top_dirs, 1):
+        print(f"{i:<6}{_humanize(size):>14}  {name}")
     print()
-    print("Storage Librarian  Phase 1  (read-only)")
-    print(f"Scanning: {target}")
 
-    print_ranked(
-        f"Top {TOP_FOLDERS} largest subfolders:",
-        folders[:TOP_FOLDERS],
-        "Folder",
-    )
-    print_ranked(
-        f"Top {TOP_FILES} largest files:",
-        files[:TOP_FILES],
-        "File",
-    )
-
-    return 0
+    # --- Files ---
+    print(f"Top {TOP_N_FILES} largest files:")
+    print(f"{'Rank':<6}{'Size':>14}  File")
+    print("-" * 50)
+    for i, (name, size) in enumerate(top_files, 1):
+        print(f"{i:<6}{_humanize(size):>14}  {name}")
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()
