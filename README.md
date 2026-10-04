@@ -49,7 +49,7 @@ The private Aubum prototype already includes working experiments with:
 - guarded system automation;
 - local-network orchestration.
 
-## Verified Deployment Topology — September 2026
+## Verified Deployment Topology — October 2026
 
 The private Aubum system is currently operating across a heterogeneous six-device environment:
 
@@ -131,13 +131,13 @@ A dedicated laptop now runs an observation-only Guarddog service that independen
 
 MAIN can also verify Guarddog itself, avoiding a design where the monitoring layer could silently fail without detection.
 
-The current private health-check system includes the Guarddog/Memory node and has completed a full-system run with:
+The current private health-check system includes the Guarddog/Memory node, routing/power state, and the secure remote-mobile layer. Health Check v0.5 completed a verified full-system run with:
 
-- **20 passing checks**
+- **27 passing checks**
 - **0 warnings**
 - **0 failures**
 
-The health checker is read-only.
+The v0.5 mobile checks verify the Tailscale service/client, tailnet connection, tailnet-only Serve configuration, localhost-only Open WebUI binding, and a successful local HTTP response. Phone-online state is intentionally not required. The health checker remains read-only.
 
 ### Visual observation and supervision
 
