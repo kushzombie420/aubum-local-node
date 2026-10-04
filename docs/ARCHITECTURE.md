@@ -67,7 +67,7 @@ The private Aubum prototype currently operates across a heterogeneous six-device
 
 Primary responsibilities:
 
-- Big Brain / reasoning;
+- Big Brain / reasoning through CUDA-accelerated llama.cpp inference;
 - orchestration;
 - Open WebUI;
 - system control;
@@ -220,11 +220,27 @@ Examples include:
 - lightweight routing;
 - persistent memory;
 - testing;
-- development tools.
+- development tools;
+- PDF/document text extraction and ingestion.
 
 Not every worker needs every capability.
 
 Aubum intentionally assigns specialized roles to different hardware.
+
+## Inference Acceleration and Document Ingestion
+
+The private MAIN deployment uses a CUDA-enabled llama.cpp build for the primary 27B reasoning model on an RTX 4090.
+
+A verified backend comparison on the same model and hardware measured approximately:
+
+- **5.71 tok/s** generation with the earlier Vulkan path;
+- **42.57 tok/s** generation with CUDA;
+- **919.5 tok/s** prompt processing before the CUDA migration;
+- **2775.6 tok/s** prompt processing after the CUDA migration.
+
+The CUDA path therefore improved measured generation throughput by about **7.5x** and prompt processing by about **3x** while preserving the existing 32K-context production configuration.
+
+The private prototype also includes a document-ingestion path for PDF files. PDF text can be extracted locally and passed into the reasoning workflow so document analysis does not depend on the user manually copying text into chat.
 
 ## On-Demand Reasoning Path
 
@@ -413,6 +429,8 @@ The private Aubum prototype has already demonstrated:
 - 3D-generation tooling;
 - dedicated voice workloads;
 - lightweight model-based routing;
+- CUDA-accelerated primary-model inference;
+- PDF/document text extraction and reading;
 - phone-based control;
 - secure remote mobile access over cellular through a private tailnet;
 - live and recorded video input;
