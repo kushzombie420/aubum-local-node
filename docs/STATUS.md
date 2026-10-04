@@ -230,7 +230,8 @@ Completed:
 - public/private project boundary defined;
 - current private heterogeneous deployment documented;
 - independent monitoring concept documented;
-- persistent-memory architecture documented.
+- persistent-memory architecture documented;
+- public capability and model matrix added.
 
 In progress:
 
