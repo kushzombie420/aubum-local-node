@@ -50,17 +50,21 @@ Unreal5080
 
 The remote path is intended to let Unreal5080 operate without a permanent dedicated keyboard, mouse, or monitor.
 
-## Pending headless work
+## Headless operation status
 
-The current remote-desktop path is verified while a physical display is still attached.
+Headless operation is verified.
 
-Remaining work:
+Completed:
 
-1. install/configure a virtual display on Unreal5080;
-2. verify Sunshine capture against that virtual display;
-3. boot Unreal5080 with no physical monitor, keyboard, or mouse attached;
-4. confirm Moonlight can still open the desktop from MAIN;
-5. optionally enable Wake-on-LAN for remote startup.
+1. virtual display installed and configured;
+2. Sunshine capture verified against the virtual display;
+3. live physical-display unplug test passed while the Moonlight stream remained active;
+4. cold boot completed with no physical monitor, keyboard, or mouse attached;
+5. MAIN successfully reconnected to the Unreal5080 desktop through Moonlight after that headless boot.
+
+Optional follow-up:
+
+- enable Wake-on-LAN for remote power-on.
 
 ## Security / repository hygiene
 
