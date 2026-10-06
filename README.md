@@ -144,15 +144,13 @@ A dedicated laptop now runs an observation-only Guarddog service that independen
 
 MAIN can also verify Guarddog itself, avoiding a design where the monitoring layer could silently fail without detection.
 
-The current private health-check system includes the Guarddog/Memory node, routing/power state, and the secure remote-mobile layer. Health Check v0.5 completed a verified full-system run with:
+The current private health-check system includes the Guarddog/Memory node, routing/power state, the secure remote-mobile layer, and the dedicated Medium Brain. Health Check v0.6 completed a verified full-system run with:
 
-- **27 passing checks**
+- **30 passing checks**
 - **0 warnings**
 - **0 failures**
 
-The v0.5 mobile checks verify the Tailscale service/client, tailnet connection, tailnet-only Serve configuration, localhost-only Open WebUI binding, and a successful local HTTP response. Phone-online state is intentionally not required. The health checker remains read-only.
-
-The newly added dedicated Medium Brain node is **not yet included in the v0.5 health-check set**. Adding Medium Brain reachability and inference-endpoint checks is the next health-check revision.
+The v0.6 checks verify the existing distributed stack plus Medium Brain TCP reachability and its OpenAI-compatible model endpoint. The checker now also treats an intentionally sleeping Big Brain as healthy when Gatekeeper reports the expected asleep state, preserving the on-demand GPU design instead of misclassifying normal power management as a failure. Phone-online state remains intentionally optional. The health checker remains read-only.
 
 ### Visual observation and supervision
 
