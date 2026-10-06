@@ -10,6 +10,7 @@ The project grew out of Aubum, a working private AI orchestration prototype that
 - [Capabilities & Models](docs/CAPABILITIES.md)
 - [Current Status](docs/STATUS.md)
 - [Worker Protocol Draft](docs/WORKER_PROTOCOL.md)
+- [Unreal5080 Workstation](docs/UNREAL5080.md)
 
 ## Goal
 
@@ -53,10 +54,11 @@ The private Aubum prototype already includes working experiments with:
 
 ## Verified Deployment Topology — October 2026
 
-The private Aubum system is currently operating across a heterogeneous seven-device environment:
+The private Aubum system is currently operating across a heterogeneous eight-device environment:
 
 - **MAIN PC** — Big Brain, primary orchestration, reasoning, Open WebUI, system control, and health aggregation
 - **Herman** — RTX 4090 worker for vision, Blender, 3D generation, image/video workflows, rendering, and heavy GPU execution
+- **Unreal5080** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; remotely operated from MAIN through Sunshine/Moonlight
 - **RTX 3070 PC** — dedicated voice and audio workloads
 - **Steam Deck** — lightweight Aubum router running a small local model with Vulkan acceleration
 - **Medium Brain worker** — GTX 1080 Ti node running a Qwen3.5 9B-class Q6_K model through CUDA with 16K context for intermediate reasoning
