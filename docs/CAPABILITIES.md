@@ -82,13 +82,15 @@ That is roughly a **7.5x generation-speed improvement** and a **3x prompt-proces
 
 ## Current health baseline
 
-Aubum Health Check v0.5 has completed a verified run with:
+Aubum Health Check v0.6 has completed a verified run with:
 
-- **27 PASS**
+- **30 PASS**
 - **0 WARN**
 - **0 FAIL**
 
-The current checks cover the main distributed services, Guarddog/Memory infrastructure, routing and Big Brain power state, and the secure remote-mobile boundary.
+The current checks cover the main distributed services, Guarddog/Memory infrastructure, three-tier routing and Big Brain power state, the secure remote-mobile boundary, and the dedicated Medium Brain.
+
+The Medium Brain checks verify TCP reachability plus a responding model/API endpoint. The checker also treats an intentionally sleeping Big Brain as healthy when Gatekeeper reports the expected asleep state, preserving on-demand GPU power management instead of misclassifying it as a failure.
 
 The remote-mobile checks verify that:
 
@@ -109,6 +111,7 @@ The phone itself is intentionally not required to be online for infrastructure h
 | GPU worker RTX 4090 system | Vision, Blender, 3D, image/video generation, rendering, heavy GPU execution |
 | RTX 3070 PC | Voice and audio specialization |
 | Steam Deck | Lightweight model-based routing |
+| GTX 1080 Ti Medium Brain worker | Intermediate Qwen3.5 9B-class reasoning with 16K context |
 | Laptop | Independent Guarddog monitoring + persistent Memory |
 | Android phone | Remote control, local edge inference, camera/video input, secure cellular access |
 
