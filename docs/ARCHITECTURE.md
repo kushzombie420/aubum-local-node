@@ -61,7 +61,7 @@ The system favors specialization rather than duplicating the same large model or
 
 ## Current Private Deployment
 
-The private Aubum prototype currently operates across a heterogeneous six-device environment.
+The private Aubum prototype currently operates across a heterogeneous seven-device environment.
 
 ### MAIN PC
 
@@ -109,6 +109,20 @@ A Steam Deck operates as a lightweight routing node using a small local model wi
 Its role is to perform inexpensive routing and classification work without consuming the primary Big Brain or high-end GPU workers.
 
 In the current private deployment, Open WebUI sends model traffic through a local Sentinel. The Sentinel can keep simple user requests and Open WebUI housekeeping on the Steam Deck path, while complex requests are forwarded to a Gatekeeper that wakes the primary 27B model only when required. The Gatekeeper tracks active work and unloads the Big Brain after an idle timeout so MAIN's RTX 4090 VRAM is not occupied unnecessarily.
+
+### Medium Brain Worker
+
+A dedicated GTX 1080 Ti system now provides an intermediate reasoning tier between the lightweight router and the primary 27B Big Brain.
+
+Current verified configuration:
+
+- Qwen3.5 9B-class Q6_K GGUF;
+- CUDA-accelerated llama.cpp inference;
+- 16K context;
+- approximately 34.3 tok/s generation in the verified benchmark;
+- production routing for multi-turn conversational/contextual requests that do not require the primary Big Brain.
+
+This lets the routing layer spend more capability than the tiny router can provide without waking the most expensive reasoning model for every non-trivial conversation.
 
 ### Guarddog + Memory Laptop
 
@@ -251,20 +265,22 @@ Open WebUI
     |
     v
 Sentinel
-  |        \
-SMALL      BIG
-  |         |
-Steam Deck  Gatekeeper
-Qwen3-1.7B      |
-                v
-          wake primary 27B
-                |
-             answer
-                |
-      idle timeout -> unload
+  |          |             \
+SMALL      MEDIUM           BIG
+  |          |               |
+Steam Deck  Dedicated        Gatekeeper
+Qwen3-1.7B  9B CUDA node         |
+             |                   v
+             |             wake primary 27B
+             |                   |
+             +------ answer -----+
+                                 |
+                       idle timeout -> unload
 ```
 
-The production path is designed so that model discovery, health checks, and known Open WebUI housekeeping requests do not wake the Big Brain. Duplicate-launch protection and active-request protection prevent unnecessary parallel loads or premature sleep.
+The production path is designed so that model discovery, health checks, and known Open WebUI housekeeping requests do not wake the Big Brain. Simple work can stay on the lightweight route, conversational/contextual work can use the dedicated Medium Brain, and hard or explicitly complex work can escalate through Gatekeeper. Duplicate-launch protection and active-request protection prevent unnecessary parallel loads or premature sleep.
+
+Production verification passed all three routes: SMALL, MEDIUM, and BIG.
 
 This is an example of resource-aware orchestration: the routing layer decides not only *where* work should run, but whether a high-cost model should be resident in GPU memory at all.
 
@@ -353,6 +369,8 @@ Health Check v0.5 now verifies the distributed services plus the secure remote-m
 
 A verified v0.5 run completed with **27 PASS / 0 WARN / 0 FAIL**.
 
+The dedicated Medium Brain node was added after that v0.5 baseline and is not yet part of the health-check shortcut. The next health-check revision should add Medium Brain network reachability and model/API health without turning the checker into a workload generator.
+
 Future work will add carefully bounded recovery actions after repeated failures are confirmed.
 
 ## Bounded Autonomy
@@ -433,6 +451,8 @@ The private Aubum prototype has already demonstrated:
 - 3D-generation tooling;
 - dedicated voice workloads;
 - lightweight model-based routing;
+- production three-tier SMALL / MEDIUM / BIG routing;
+- dedicated CUDA-accelerated 9B Medium Brain inference;
 - CUDA-accelerated primary-model inference;
 - PDF/document text extraction and reading;
 - phone-based control;
