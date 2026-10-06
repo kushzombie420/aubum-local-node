@@ -41,10 +41,11 @@ The private Aubum environment has already been used for:
 
 ## Current verified deployment
 
-As of October 2026, the private Aubum environment is operating across seven heterogeneous devices:
+As of October 2026, the private Aubum environment is operating across eight heterogeneous devices:
 
 - **MAIN PC** — primary Big Brain, orchestration, reasoning, Open WebUI, system control, and health aggregation
 - **Herman** — RTX 4090 worker handling vision, Blender, 3D generation, image/video workflows, rendering, and other heavy GPU execution
+- **Unreal5080** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; Sunshine/Moonlight remote desktop from MAIN is verified
 - **RTX 3070 PC** — dedicated voice and audio workloads
 - **Steam Deck** — lightweight local routing node using Vulkan-accelerated inference
 - **Medium Brain worker** — GTX 1080 Ti node running a Qwen3.5 9B-class Q6_K model through CUDA with 16K context
