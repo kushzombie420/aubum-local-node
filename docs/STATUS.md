@@ -19,7 +19,9 @@ The private Aubum environment has already been used for:
 - result and artifact generation;
 - dedicated voice and audio workloads;
 - lightweight model-based routing;
-- on-demand small-model / Big-Brain routing with automatic wake/sleep and idle GPU release;
+- production three-tier SMALL / MEDIUM / BIG routing;
+- dedicated CUDA-accelerated Medium Brain inference;
+- on-demand Big-Brain wake/sleep and idle GPU release;
 - CUDA-accelerated primary-model inference on the RTX 4090;
 - local PDF/document text extraction and reading;
 - live web research with source citations;
@@ -39,12 +41,13 @@ The private Aubum environment has already been used for:
 
 ## Current verified deployment
 
-As of October 2026, the private Aubum environment is operating across six heterogeneous devices:
+As of October 2026, the private Aubum environment is operating across seven heterogeneous devices:
 
 - **MAIN PC** — primary Big Brain, orchestration, reasoning, Open WebUI, system control, and health aggregation
 - **Herman** — RTX 4090 worker handling vision, Blender, 3D generation, image/video workflows, rendering, and other heavy GPU execution
 - **RTX 3070 PC** — dedicated voice and audio workloads
 - **Steam Deck** — lightweight local routing node using Vulkan-accelerated inference
+- **Medium Brain worker** — GTX 1080 Ti node running a Qwen3.5 9B-class Q6_K model through CUDA with 16K context
 - **Guarddog + Memory laptop** — independent system monitoring and persistent external Memory
 - **Android phone** — remote control, edge tasks, recorded-video input, and live camera/sensor input
 
@@ -76,16 +79,22 @@ Verified behavior:
 
 - Open WebUI connects through a production Sentinel rather than directly to the Big Brain;
 - simple requests are handled by the Steam Deck's Qwen3-1.7B router;
-- complex requests are routed to a production Gatekeeper that wakes the 27B model on demand;
+- intermediate conversational/contextual requests can route to a dedicated Qwen3.5 9B-class Medium Brain on the GTX 1080 Ti worker;
+- hard or explicitly complex requests are routed to a production Gatekeeper that wakes the 27B model on demand;
 - duplicate wake/process protection prevents multiple copies of the Big Brain from launching;
 - active-request protection prevents sleep while work is still being served;
 - the Big Brain automatically unloads after 900 seconds of inactivity;
 - Open WebUI model polling and housekeeping requests such as title generation, follow-up suggestions, and tag generation are kept on the SMALL path so they do not wake the 27B;
 - health checks report Sentinel, Gatekeeper, Big Brain state, active requests, and idle timeout without waking the Big Brain;
 - an end-to-end Open WebUI arithmetic test was answered by the Steam Deck while the primary RTX 4090 remained free;
-- a complex Unreal Engine debugging request was verified to take the BIG route.
+- the Medium Brain was verified at approximately **34.3 tok/s** with Q6_K and 16K context;
+- a multi-turn conversation test was verified to take the MEDIUM route and preserve context;
+- a complex Unreal Engine debugging request was verified to take the BIG route;
+- the canonical production Sentinel passed SMALL, MEDIUM, and BIG routing tests on the production endpoint.
 
 The current production health check reports the routing/power stack alongside the existing distributed services. Health Check v0.5 now also verifies the secure remote-mobile layer. A verified run completed with 27 passing checks, 0 warnings, and 0 failures.
+
+The dedicated Medium Brain node was added after that v0.5 baseline and is not yet covered by the health-check shortcut. Adding Medium Brain reachability and inference-endpoint checks is the next health-check revision.
 
 ### Web research and conversational resource control
 
