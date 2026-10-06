@@ -365,11 +365,11 @@ MAIN checks Guarddog
 Guarddog checks local Memory
 ```
 
-Health Check v0.5 now verifies the distributed services plus the secure remote-mobile boundary. Its added checks cover the Tailscale service/client, active tailnet connection, tailnet-only Serve configuration, localhost-only Open WebUI binding, and local HTTP response. The phone itself is not required to be online for infrastructure health.
+Health Check v0.6 verifies the distributed services, the secure remote-mobile boundary, and the dedicated Medium Brain. Its checks cover the Tailscale service/client, active tailnet connection, tailnet-only Serve configuration, localhost-only Open WebUI binding, local HTTP response, Medium Brain TCP reachability, and the Medium Brain model/API endpoint. The phone itself is not required to be online for infrastructure health.
 
-A verified v0.5 run completed with **27 PASS / 0 WARN / 0 FAIL**.
+A verified v0.6 run completed with **30 PASS / 0 WARN / 0 FAIL**.
 
-The dedicated Medium Brain node was added after that v0.5 baseline and is not yet part of the health-check shortcut. The next health-check revision should add Medium Brain network reachability and model/API health without turning the checker into a workload generator.
+The checker remains read-only. It also recognizes the primary Big Brain's intentionally asleep state as healthy when Gatekeeper reports that expected state, so normal on-demand GPU power management is not treated as a failure.
 
 Future work will add carefully bounded recovery actions after repeated failures are confirmed.
 
