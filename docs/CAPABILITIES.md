@@ -50,9 +50,11 @@ The goal is to keep verified behavior separate from experiments and future work.
 | Phone-local edge inference | Android | Qwen3 4B-class local model | **Verified** |
 | Storage Librarian / semantic file manager | MAIN + storage | File indexing, classification and move tooling | **Planned** |
 | Generated-media retention cleanup | MAIN + archive storage | Bounded archive/cleanup policy | **Planned** |
+| Worker reboot bootstrap | Herman RTX 4090 worker | Scheduled headless full-worker bootstrap | **Verified** |
+| Headless creation workstation | Unreal5080 | Sunshine + Moonlight + virtual display | **Verified** |
 | Automatic hardware capability discovery | Future worker nodes | Worker inventory + benchmark reporting | **Planned** |
 | Portable temporary worker bridge | Android + temporary PC | Bounded remote worker bootstrap | **Planned** |
-| Music / audio generation | Dedicated worker | Local generative-audio stack | **Planned** |
+| Music / audio generation | Herman RTX 4090 worker | ACE-Step 1.5 + managed MUSIC mode + Open WebUI tool path | **Verified** |
 
 ## Current model roles
 
@@ -108,7 +110,7 @@ The phone itself is intentionally not required to be online for infrastructure h
 | Device class | Current responsibility |
 |---|---|
 | MAIN RTX 4090 system | Primary reasoning, orchestration, Open WebUI, system control, health aggregation |
-| GPU worker RTX 4090 system | Vision, Blender, 3D, image/video generation, rendering, heavy GPU execution |
+| GPU worker RTX 4090 system | Vision, Blender, 3D, image/video generation, local music generation, rendering, heavy GPU execution |
 | RTX 3070 PC | Voice and audio specialization |
 | Steam Deck | Lightweight model-based routing |
 | GTX 1080 Ti Medium Brain worker | Intermediate Qwen3.5 9B-class reasoning with 16K context |
@@ -121,7 +123,7 @@ The next private-prototype priorities are intentionally practical:
 
 1. storage cleanup and reorganization;
 2. Linux sideloading after storage is understood;
-3. VRAM cleanup and on-demand service management on the GPU worker;
+3. continue hardening managed GPU-worker service arbitration and cleanup;
 4. the full RTX 3070 voice pipeline;
 5. bounded generated-media retention;
 6. Storage Librarian / semantic file management;
