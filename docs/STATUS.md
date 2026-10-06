@@ -189,22 +189,25 @@ Memory writes and corrective actions remain disabled in the visual supervisor wh
 
 ### Health checking
 
-The private Aubum health-check system currently verifies the main distributed services, including the Guarddog/Memory laptop, routing/power state, and secure remote-mobile access.
+The private Aubum health-check system currently verifies the main distributed services, including the Guarddog/Memory laptop, routing/power state, secure remote-mobile access, and the dedicated Medium Brain.
 
-Health Check v0.5 adds checks for:
+Health Check v0.6 verifies:
 
 - the Tailscale Windows service and client;
 - active tailnet connection;
 - Tailscale Serve remaining tailnet-only;
 - the Serve proxy still targeting localhost Open WebUI;
 - Open WebUI remaining bound to localhost;
-- a successful local Open WebUI HTTP response.
+- a successful local Open WebUI HTTP response;
+- Medium Brain TCP reachability;
+- the Medium Brain model/API endpoint;
+- expected Big Brain sleep state through Gatekeeper, so intentional idle unload is treated as healthy.
 
 Phone-online state is intentionally not required, so a powered-off or disconnected phone does not make the infrastructure unhealthy.
 
 A verified full-system run completed with:
 
-- 27 passing checks;
+- 30 passing checks;
 - 0 warnings;
 - 0 failures.
 
