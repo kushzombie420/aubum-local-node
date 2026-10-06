@@ -108,7 +108,7 @@ A Steam Deck operates as a lightweight routing node using a small local model wi
 
 Its role is to perform inexpensive routing and classification work without consuming the primary Big Brain or high-end GPU workers.
 
-In the current private deployment, Open WebUI sends model traffic through a local Sentinel. The Sentinel can keep simple user requests and Open WebUI housekeeping on the Steam Deck path, while complex requests are forwarded to a Gatekeeper that wakes the primary 27B model only when required. The Gatekeeper tracks active work and unloads the Big Brain after an idle timeout so MAIN's RTX 4090 VRAM is not occupied unnecessarily.
+In the current private deployment, Open WebUI sends model traffic through a local Sentinel. The Sentinel can keep simple requests and housekeeping on the Steam Deck path, route intermediate conversational/contextual work to the dedicated Medium Brain, and forward hard or explicitly complex work through Gatekeeper to the primary 27B model. Gatekeeper wakes the Big Brain only when required, tracks active work, and unloads it after an idle timeout so MAIN's RTX 4090 VRAM is not occupied unnecessarily.
 
 ### Medium Brain Worker
 
