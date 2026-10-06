@@ -92,9 +92,9 @@ Verified behavior:
 - a complex Unreal Engine debugging request was verified to take the BIG route;
 - the canonical production Sentinel passed SMALL, MEDIUM, and BIG routing tests on the production endpoint.
 
-The current production health check reports the routing/power stack alongside the existing distributed services. Health Check v0.5 now also verifies the secure remote-mobile layer. A verified run completed with 27 passing checks, 0 warnings, and 0 failures.
+The current production health check reports the routing/power stack alongside the existing distributed services. Health Check v0.6 verifies the secure remote-mobile layer plus the dedicated Medium Brain through TCP reachability and its model/API endpoint. A verified run completed with **30 passing checks, 0 warnings, and 0 failures**.
 
-The dedicated Medium Brain node was added after that v0.5 baseline and is not yet covered by the health-check shortcut. Adding Medium Brain reachability and inference-endpoint checks is the next health-check revision.
+The checker remains read-only and now treats an intentionally sleeping Big Brain as healthy when Gatekeeper confirms the expected asleep state. The desktop health-check shortcut has been promoted to v0.6.
 
 ### Web research and conversational resource control
 
