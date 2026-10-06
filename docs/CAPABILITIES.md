@@ -30,8 +30,8 @@ The goal is to keep verified behavior separate from experiments and future work.
 | Cross-session memory retrieval | MAIN + laptop | Open WebUI Memory tooling | **Verified** |
 | Automatic relevance-based Memory | MAIN + laptop | Planned recall/write layer | **Planned** |
 | Independent system monitoring | Guarddog laptop | Observation-only health monitoring | **Verified** |
-| Full health aggregation | MAIN | Aubum Health Check v0.5 | **Verified** |
-| Medium Brain health-check coverage | MAIN + Medium worker | Reachability + inference endpoint checks | **Planned** |
+| Full health aggregation | MAIN | Aubum Health Check v0.6, verified 30 PASS / 0 WARN / 0 FAIL | **Verified** |
+| Medium Brain health-check coverage | MAIN + Medium worker | TCP reachability + model/API endpoint checks | **Verified** |
 | Desktop visual observation | MAIN / vision worker | Direct screen capture + vision analysis | **Verified** |
 | Condition-aware visual supervision | MAIN / vision worker | Bounded repeated inspection | **Experimental** |
 | Saved visual evidence | MAIN / vision worker | Frames/contact sheets + reinspection | **Verified** |
