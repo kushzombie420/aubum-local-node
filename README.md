@@ -50,15 +50,17 @@ The private Aubum prototype already includes working experiments with:
 - independent health monitoring;
 - persistent cross-machine memory;
 - guarded system automation;
-- local-network orchestration.
+- local-network orchestration;
+- local music generation on a managed GPU worker with automatic worker-mode switching, result transfer, and chat attachment;
+- scheduled full-worker bootstrap on the managed GPU worker, verified across a reboot.
 
 ## Verified Deployment Topology — October 2026
 
 The private Aubum system is currently operating across a heterogeneous eight-device environment:
 
 - **MAIN PC** — Big Brain, primary orchestration, reasoning, Open WebUI, system control, and health aggregation
-- **Herman** — RTX 4090 worker for vision, Blender, 3D generation, image/video workflows, rendering, and heavy GPU execution
-- **Unreal5080** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; remotely operated from MAIN through Sunshine/Moonlight
+- **Herman** — RTX 4090 managed worker for vision, Blender, 3D generation, image/video workflows, rendering, local music generation, and other heavy GPU execution
+- **Unreal5080** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; verified for headless cold boot and remote operation from MAIN through Sunshine/Moonlight
 - **RTX 3070 PC** — dedicated voice and audio workloads
 - **Steam Deck** — lightweight Aubum router running a small local model with Vulkan acceleration
 - **Medium Brain worker** — GTX 1080 Ti node running a Qwen3.5 9B-class Q6_K model through CUDA with 16K context for intermediate reasoning
@@ -139,6 +141,22 @@ Verified behavior includes:
 - manual Taildrop file transfer from MAIN to the phone was also verified.
 
 This extends the phone from a local-network controller into a secure remote interface without opening a public inbound port to Open WebUI.
+
+### Managed worker music generation and reboot bootstrap
+
+The private prototype now includes verified local music generation on the managed RTX 4090 worker.
+
+Verified behavior includes:
+
+- ACE-Step 1.5 running as an on-demand specialist workload on the managed GPU worker;
+- controller-managed switching into and out of a dedicated MUSIC mode;
+- REST-based generation initiated from the normal Aubum chat interface;
+- finished audio copied back to MAIN and attached in Open WebUI;
+- temporary API-generation output on the worker cleaned after the job;
+- the worker restored to its prior managed state after generation;
+- a full end-to-end chat request successfully produced and returned a playable music track.
+
+The worker's normal bootstrap path is also scheduled at Windows startup and was verified after a reboot without manually launching the desktop bootstrap.
 
 ### Independent Guarddog monitoring
 
