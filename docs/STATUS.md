@@ -44,8 +44,8 @@ The private Aubum environment has already been used for:
 As of October 2026, the private Aubum environment is operating across eight heterogeneous devices:
 
 - **MAIN PC** — primary Big Brain, orchestration, reasoning, Open WebUI, system control, and health aggregation
-- **Herman** — RTX 4090 worker handling vision, Blender, 3D generation, image/video workflows, rendering, and other heavy GPU execution
-- **Unreal5080** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; Sunshine/Moonlight remote desktop from MAIN is verified
+- **Herman** — RTX 4090 managed worker handling vision, Blender, 3D generation, image/video workflows, rendering, local music generation, and other heavy GPU execution
+- **Unreal5080** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; Sunshine/Moonlight remote desktop and cold-boot headless operation from MAIN are verified
 - **RTX 3070 PC** — dedicated voice and audio workloads
 - **Steam Deck** — lightweight local routing node using Vulkan-accelerated inference
 - **Medium Brain worker** — GTX 1080 Ti node running a Qwen3.5 9B-class Q6_K model through CUDA with 16K context
@@ -127,6 +127,22 @@ Verified behavior:
 - manual Taildrop transfer from MAIN to the phone was verified.
 
 Generated images remain previewable and manually downloadable through Open WebUI on mobile. Automatic permanent image-transfer/retention behavior is intentionally deferred rather than adding more background plumbing before it is needed.
+
+### Managed music generation and worker auto-bootstrap
+
+The private RTX 4090 worker now supports a verified local music-generation path through ACE-Step 1.5.
+
+Verified behavior:
+
+- a dedicated managed MUSIC mode was added beside existing GPU worker modes;
+- MUSIC-to-VISION and MUSIC-to-IDLE transitions were verified through the central worker controller;
+- the ACE-Step REST generation path was verified end to end;
+- a normal Aubum chat request generated a playable track;
+- the finished audio was copied to MAIN and attached in Open WebUI;
+- API temporary output on the worker is cleaned after MUSIC stops;
+- the worker restores its previous managed mode after generation.
+
+The full worker bootstrap is now scheduled at Windows startup with a short delay. A post-reboot test verified that the controller and normal VISION-ready state returned automatically without clicking the desktop bootstrap.
 
 ### Guarddog and independent monitoring
 
@@ -224,7 +240,7 @@ The current near-term infrastructure backlog is:
 4. **RTX 3070 voice pipeline** for STT, Aubum response, TTS, and optional voice conversion on the dedicated voice machine.
 5. **Generated-image retention cleanup**: keep Open WebUI preview/manual download behavior, then add bounded automatic cleanup of old generated files instead of automatic phone transfer.
 6. **Portable phone bridge** for temporarily attaching a bounded Aubum worker/helper through the phone when using another PC.
-7. **Music/audio generation** as a later specialist capability.
+7. **Music/audio expansion** beyond the now-verified song-generation baseline, including sound effects, ambient loops, and game-audio asset workflows.
 8. **Public presentation/promotion pass** with a cleaner architecture diagram, screenshots, and a short reproducible demo of SMALL routing, BIG wake/sleep, web research, and remote mobile access.
 9. **Smarter Memory** with relevance-based recall and selective automatic writes after the current explicit persistent-memory baseline remains stable.
 
