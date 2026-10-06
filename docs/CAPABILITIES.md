@@ -17,6 +17,8 @@ The goal is to keep verified behavior separate from experiments and future work.
 |---|---|---|---|
 | Primary reasoning | MAIN RTX 4090 | Qwen3.6 27B-class GGUF through llama.cpp CUDA | **Verified** |
 | Lightweight request routing | Steam Deck | Qwen3 1.7B-class local model with Vulkan acceleration | **Verified** |
+| Dedicated medium reasoning | GTX 1080 Ti worker | Qwen3.5 9B-class Q6_K GGUF through llama.cpp CUDA, 16K context | **Verified** |
+| Three-tier request routing | MAIN + Steam Deck + Medium worker | Sentinel SMALL / MEDIUM / BIG routing | **Verified** |
 | On-demand Big Brain wake | MAIN | Sentinel + Gatekeeper + llama.cpp | **Verified** |
 | Idle Big Brain unload | MAIN | 15-minute protected idle timeout | **Verified** |
 | Active-request sleep protection | MAIN | Gatekeeper request tracking | **Verified** |
@@ -29,6 +31,7 @@ The goal is to keep verified behavior separate from experiments and future work.
 | Automatic relevance-based Memory | MAIN + laptop | Planned recall/write layer | **Planned** |
 | Independent system monitoring | Guarddog laptop | Observation-only health monitoring | **Verified** |
 | Full health aggregation | MAIN | Aubum Health Check v0.5 | **Verified** |
+| Medium Brain health-check coverage | MAIN + Medium worker | Reachability + inference endpoint checks | **Planned** |
 | Desktop visual observation | MAIN / vision worker | Direct screen capture + vision analysis | **Verified** |
 | Condition-aware visual supervision | MAIN / vision worker | Bounded repeated inspection | **Experimental** |
 | Saved visual evidence | MAIN / vision worker | Frames/contact sheets + reinspection | **Verified** |
@@ -58,6 +61,7 @@ The private prototype intentionally uses different model sizes for different job
 | Role | Current model family | Why it is used |
 |---|---|---|
 | Primary Big Brain | Qwen3.6 27B-class GGUF | Main reasoning, coding, synthesis, complex requests |
+| Medium Brain | Qwen3.5 9B-class Q6_K GGUF | Intermediate conversational/contextual reasoning without waking the primary 27B |
 | Steam Deck router | Qwen3 1.7B-class | Cheap classification/routing without occupying the primary GPU |
 | Vision | Qwen3-VL 8B-class | Image, camera, and saved-evidence inspection |
 | Phone edge model | Qwen3 4B-class | Lightweight local mobile inference and edge experiments |
