@@ -85,12 +85,13 @@ A dedicated high-end GPU workstation handles workloads including:
 - 3D generation;
 - image generation;
 - video generation;
+- local music generation;
 - rendering;
 - other GPU-heavy tasks.
 
 The worker uses managed workload modes so incompatible GPU services do not need to remain loaded simultaneously.
 
-The controller tracks the active mode and restores the worker to the appropriate state after jobs.
+The controller tracks the active mode and restores the worker to the appropriate state after jobs. The current managed worker has also verified a dedicated MUSIC mode, including clean switching with vision workloads, return-to-idle behavior, temporary API-output cleanup, and end-to-end chat-driven generation.
 
 ### Unreal / Creation Workstation
 
@@ -103,7 +104,11 @@ A separate RTX 5080 workstation named `Unreal5080` is being established as the p
 
 This separation is intentional: MAIN keeps the primary Big Brain on its RTX 4090, while Unreal5080 absorbs interactive creation workloads that would otherwise compete with local inference for system RAM, VRAM, and GPU time.
 
-Remote-control access has been verified through Sunshine on Unreal5080 and Moonlight on MAIN. The machines pair successfully over the local network and MAIN can open the Unreal5080 desktop remotely. A virtual-display/headless configuration and Wake-on-LAN remain follow-up work.
+Remote-control access has been verified through Sunshine on Unreal5080 and Moonlight on MAIN. The machines pair successfully over the local network and MAIN can open the Unreal5080 desktop remotely. A virtual display is installed, live unplug testing passed, and a cold-boot headless test succeeded with no physical monitor, keyboard, or mouse attached. Wake-on-LAN remains optional follow-up work.
+
+### Managed worker startup persistence
+
+The private RTX 4090 worker now uses a headless full-worker bootstrap scheduled at Windows startup. The bootstrap brings up the worker controller, ensures the remote Blender service is running, and places the GPU worker into its normal ready vision state. A reboot test verified that the worker returned automatically without manually launching the desktop bootstrap.
 
 ### Voice Worker
 
