@@ -61,7 +61,7 @@ The system favors specialization rather than duplicating the same large model or
 
 ## Current Private Deployment
 
-The private Aubum prototype currently operates across a heterogeneous seven-device environment.
+The private Aubum prototype currently operates across a heterogeneous eight-device environment.
 
 ### MAIN PC
 
@@ -91,6 +91,19 @@ A dedicated high-end GPU workstation handles workloads including:
 The worker uses managed workload modes so incompatible GPU services do not need to remain loaded simultaneously.
 
 The controller tracks the active mode and restores the worker to the appropriate state after jobs.
+
+### Unreal / Creation Workstation
+
+A separate RTX 5080 workstation named `Unreal5080` is being established as the primary interactive creation machine for:
+
+- Unreal Engine and MetaHuman/avatar development;
+- Blender and other 3D authoring;
+- gaming and graphics-heavy interactive work;
+- selected image/video generation workloads.
+
+This separation is intentional: MAIN keeps the primary Big Brain on its RTX 4090, while Unreal5080 absorbs interactive creation workloads that would otherwise compete with local inference for system RAM, VRAM, and GPU time.
+
+Remote-control access has been verified through Sunshine on Unreal5080 and Moonlight on MAIN. The machines pair successfully over the local network and MAIN can open the Unreal5080 desktop remotely. A virtual-display/headless configuration and Wake-on-LAN remain follow-up work.
 
 ### Voice Worker
 
