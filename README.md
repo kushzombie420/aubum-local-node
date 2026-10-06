@@ -34,7 +34,8 @@ The private Aubum prototype already includes working experiments with:
 - 3D-generation tooling;
 - dedicated voice workloads;
 - lightweight model-based routing;
-- on-demand small-model / Big-Brain routing with automatic wake/sleep and idle GPU release;
+- three-tier SMALL / MEDIUM / BIG model routing with a dedicated intermediate reasoning node;
+- on-demand Big-Brain wake/sleep and idle GPU release;
 - CUDA-accelerated primary-model inference on the RTX 4090;
 - PDF/document text extraction for local document reading;
 - live web research with source citations;
@@ -52,12 +53,13 @@ The private Aubum prototype already includes working experiments with:
 
 ## Verified Deployment Topology — October 2026
 
-The private Aubum system is currently operating across a heterogeneous six-device environment:
+The private Aubum system is currently operating across a heterogeneous seven-device environment:
 
 - **MAIN PC** — Big Brain, primary orchestration, reasoning, Open WebUI, system control, and health aggregation
 - **Herman** — RTX 4090 worker for vision, Blender, 3D generation, image/video workflows, rendering, and heavy GPU execution
 - **RTX 3070 PC** — dedicated voice and audio workloads
 - **Steam Deck** — lightweight Aubum router running a small local model with Vulkan acceleration
+- **Medium Brain worker** — GTX 1080 Ti node running a Qwen3.5 9B-class Q6_K model through CUDA with 16K context for intermediate reasoning
 - **Guarddog + Memory laptop** — independent monitoring plus persistent external Memory
 - **Android phone** — remote control, edge tasks, recorded-video input, and live camera/sensor input
 
@@ -95,6 +97,16 @@ Verified behavior includes:
 - a complex Unreal Engine debugging request was verified to take the BIG route and wake the primary reasoning model.
 
 This turns the primary reasoning model into an on-demand resource rather than a permanently loaded GPU resident while preserving a single Open WebUI entry point.
+
+### Three-tier routing and dedicated Medium Brain
+
+The private prototype now has a production three-tier request path:
+
+- **SMALL** requests remain on the lightweight Steam Deck model;
+- **MEDIUM** requests can run on a dedicated GTX 1080 Ti node using a Qwen3.5 9B-class Q6_K GGUF through CUDA with a 16K context window;
+- **BIG** requests continue through Gatekeeper to the primary 27B reasoning model.
+
+The Medium Brain was benchmarked at approximately **34.3 tok/s** with the 16K context configuration. Production tests verified all three routes independently, including a multi-turn context request on MEDIUM and an Unreal Engine request on BIG. The canonical production Sentinel now uses this three-tier routing path.
 
 ### Web research and conversational resource control
 
@@ -139,6 +151,8 @@ The current private health-check system includes the Guarddog/Memory node, routi
 - **0 failures**
 
 The v0.5 mobile checks verify the Tailscale service/client, tailnet connection, tailnet-only Serve configuration, localhost-only Open WebUI binding, and a successful local HTTP response. Phone-online state is intentionally not required. The health checker remains read-only.
+
+The newly added dedicated Medium Brain node is **not yet included in the v0.5 health-check set**. Adding Medium Brain reachability and inference-endpoint checks is the next health-check revision.
 
 ### Visual observation and supervision
 
