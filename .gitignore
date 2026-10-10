@@ -1,0 +1,60 @@
+# Local/private configuration
+.env
+.env.*
+!.env.example
+private/
+credentials/
+WorkerSecrets/
+
+# Local databases and memory/state
+*.db
+*.sqlite
+*.sqlite3
+memory/
+Memory/
+
+# Local models and checkpoints
+*.gguf
+*.ggml
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+models/
+Models/
+
+# Generated media and runtime output
+generated/
+outputs/
+output/
+media/
+cache/
+Cache/
+logs/
+*.log
+tmp/
+temp/
+*.tmp
+
+# Local backups and repair snapshots
+backup/
+backups/
+*_backup_*/
+*.bak
+*.old
+
+# Machine-local configuration
+local_config.*
+config.local.*
+*.local.json
+*.local.yaml
+*.local.yml
+
+# Tool/runtime noise
+__pycache__/
+*.pyc
+node_modules/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
