@@ -56,6 +56,25 @@ This deployment demonstrates specialized roles operating across Windows PCs, AMD
 
 These capabilities are currently part of a private development environment and are not yet represented as a clean public implementation.
 
+## Recovery baseline — October 9, 2026
+
+A broad private-prototype regression repair produced a new observed baseline for shared orchestration and media/sensor routing.
+
+User-observed end-to-end checks through the normal Open WebUI path verified:
+
+- ordinary conversational acknowledgements can complete with zero action-tool calls;
+- music, image generation, and image editing route to their intended specialist tools;
+- text-to-video and image-to-video routing produce real video artifacts;
+- explicit live-camera requests automatically activate the connected phone-camera path;
+- current visual claims require current-turn observation evidence;
+- stale, blank, uniform, unchanged, unavailable, and connection-placeholder camera feeds fail closed instead of producing invented scene descriptions;
+- bounded camera sessions stop afterward when Aubum started the feed;
+- SMALL / MEDIUM / BIG routing and Big-Brain power control remained intact during the recovery.
+
+The recovery also reinforced a project-wide verification rule: automated tests and agent reports are supporting evidence, but known-good promotion requires observed behavior through the real user path.
+
+A sanitized summary is documented in [Recovery Baseline — 2026-10-09](RECOVERY_BASELINE_2026-10-09.md).
+
 ## Recently verified private milestones
 
 ### CUDA inference acceleration and PDF reading
