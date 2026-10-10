@@ -9,6 +9,7 @@ The project grew out of Aubum, a working private AI orchestration prototype that
 - [Architecture](docs/ARCHITECTURE.md)
 - [Capabilities & Models](docs/CAPABILITIES.md)
 - [Current Status](docs/STATUS.md)
+- [Recovery Baseline — 2026-10-09](docs/RECOVERY_BASELINE_2026-10-09.md)
 - [Worker Protocol Draft](docs/WORKER_PROTOCOL.md)
 - [Unreal5080 Workstation](docs/UNREAL5080.md)
 
