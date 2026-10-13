@@ -44,8 +44,8 @@ The private Aubum environment has already been used for:
 As of October 2026, the private Aubum environment is operating across eight heterogeneous devices:
 
 - **MAIN PC** — primary Big Brain, orchestration, reasoning, Open WebUI, system control, and health aggregation
-- **Herman** — RTX 4090 managed worker handling vision, Blender, 3D generation, image/video workflows, rendering, local music generation, and other heavy GPU execution
-- **Unreal5080** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; Sunshine/Moonlight remote desktop and cold-boot headless operation from MAIN are verified
+- **managed GPU worker** — RTX 4090 managed worker handling vision, Blender, 3D generation, image/video workflows, rendering, local music generation, and other heavy GPU execution
+- **creation workstation** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; Sunshine/Moonlight remote desktop and cold-boot headless operation from MAIN are verified
 - **RTX 3070 PC** — dedicated voice and audio workloads
 - **Steam Deck** — lightweight local routing node using Vulkan-accelerated inference
 - **Medium Brain worker** — GTX 1080 Ti node running a Qwen3.5 9B-class Q6_K model through CUDA with 16K context
@@ -112,7 +112,7 @@ Verified behavior:
 - a complex Unreal Engine debugging request was verified to take the BIG route;
 - the canonical production Sentinel passed SMALL, MEDIUM, and BIG routing tests on the production endpoint.
 
-The current production health check reports the routing/power stack alongside the existing distributed services. Health Check v0.6 verifies the secure remote-mobile layer plus the dedicated Medium Brain through TCP reachability and its model/API endpoint. A verified run completed with **30 passing checks, 0 warnings, and 0 failures**.
+The current production health check reports the routing/power stack alongside the existing distributed services. Health Check v0.6 verifies the secure remote-mobile layer plus the dedicated Medium Brain through TCP reachability and its model/API endpoint. Private project records report **30 passing checks, 0 warnings, and 0 failures**; the raw run log is not included in this public repository.
 
 The checker remains read-only and now treats an intentionally sleeping Big Brain as healthy when Gatekeeper confirms the expected asleep state. The desktop health-check shortcut has been promoted to v0.6.
 
@@ -241,7 +241,7 @@ Health Check v0.6 verifies:
 
 Phone-online state is intentionally not required, so a powered-off or disconnected phone does not make the infrastructure unhealthy.
 
-A verified full-system run completed with:
+A historical private full-system run was reported with (raw execution log not published here):
 
 - 30 passing checks;
 - 0 warnings;
@@ -255,7 +255,7 @@ The current near-term infrastructure backlog is:
 
 1. **Storage cleanup and reorganization** before attempting Linux sideloading, so large AI/model/game-development files are intentionally placed instead of being dragged through another operating-system experiment.
 2. **Linux sideloading experiment** after storage is cleaned and free-space/partition requirements are understood.
-3. **Herman VRAM cleanup** using the same on-demand load / protected active-job / idle-unload pattern proven on MAIN, without disturbing Herman's known-good worker modes.
+3. **managed GPU worker VRAM cleanup** using the same on-demand load / protected active-job / idle-unload pattern proven on MAIN, without disturbing managed GPU worker's known-good worker modes.
 4. **RTX 3070 voice pipeline** for STT, Aubum response, TTS, and optional voice conversion on the dedicated voice machine.
 5. **Generated-image retention cleanup**: keep Open WebUI preview/manual download behavior, then add bounded automatic cleanup of old generated files instead of automatic phone transfer.
 6. **Portable phone bridge** for temporarily attaching a bounded Aubum worker/helper through the phone when using another PC.
