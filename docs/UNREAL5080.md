@@ -1,6 +1,6 @@
-# Unreal5080 Workstation
+# creation workstation Workstation
 
-`Unreal5080` is a dedicated RTX 5080 creation workstation in the private Aubum environment.
+`creation workstation` is a dedicated RTX 5080 creation workstation in the private Aubum environment.
 
 ## Intended role
 
@@ -24,13 +24,13 @@ Verified as of October 5, 2026:
 - fresh Windows setup completed;
 - Windows updates completed;
 - NVIDIA developer driver installed;
-- hostname set to `Unreal5080`;
-- Sunshine host installed on Unreal5080;
+- a dedicated hostname configured for the creation workstation;
+- Sunshine host installed on creation workstation;
 - Sunshine stable release `2026.914.233613` is running and its local web UI is reachable;
 - Moonlight PC client is installed on MAIN;
-- MAIN automatically discovers Unreal5080 over the local network;
+- MAIN automatically discovers creation workstation over the local network;
 - Sunshine/Moonlight pairing completed successfully;
-- the Unreal5080 `Desktop` stream opens successfully from MAIN.
+- the creation workstation `Desktop` stream opens successfully from MAIN.
 
 ## Remote-control topology
 
@@ -45,10 +45,10 @@ local network
 Sunshine host
   |
   v
-Unreal5080
+creation workstation
 ```
 
-The remote path is intended to let Unreal5080 operate without a permanent dedicated keyboard, mouse, or monitor.
+The remote path is intended to let creation workstation operate without a permanent dedicated keyboard, mouse, or monitor.
 
 ## Headless operation status
 
@@ -60,7 +60,7 @@ Completed:
 2. Sunshine capture verified against the virtual display;
 3. live physical-display unplug test passed while the Moonlight stream remained active;
 4. cold boot completed with no physical monitor, keyboard, or mouse attached;
-5. MAIN successfully reconnected to the Unreal5080 desktop through Moonlight after that headless boot.
+5. MAIN successfully reconnected to the creation workstation desktop through Moonlight after that headless boot.
 
 Optional follow-up:
 
@@ -81,4 +81,4 @@ Machine-specific secrets remain outside the public repository.
 
 The workstation exists to separate interactive graphics workloads from primary-model inference.
 
-Rather than replacing MAIN's RTX 4090, Unreal5080 provides a second specialized compute/creation node so Unreal, Blender, avatar work, and related tasks do not need to compete directly with the Big Brain for the same GPU and system resources.
+Rather than replacing MAIN's RTX 4090, creation workstation provides a second specialized compute/creation node so Unreal, Blender, avatar work, and related tasks do not need to compete directly with the Big Brain for the same GPU and system resources.
