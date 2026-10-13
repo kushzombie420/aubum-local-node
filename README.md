@@ -11,7 +11,7 @@ The project grew out of Aubum, a working private AI orchestration prototype that
 - [Current Status](docs/STATUS.md)
 - [Recovery Baseline — 2026-10-09](docs/RECOVERY_BASELINE_2026-10-09.md)
 - [Worker Protocol Draft](docs/WORKER_PROTOCOL.md)
-- [Unreal5080 Workstation](docs/UNREAL5080.md)
+- [creation workstation Workstation](docs/UNREAL5080.md)
 
 ## Goal
 
@@ -60,8 +60,8 @@ The private Aubum prototype already includes working experiments with:
 The private Aubum system is currently operating across a heterogeneous eight-device environment:
 
 - **MAIN PC** — Big Brain, primary orchestration, reasoning, Open WebUI, system control, and health aggregation
-- **Herman** — RTX 4090 managed worker for vision, Blender, 3D generation, image/video workflows, rendering, local music generation, and other heavy GPU execution
-- **Unreal5080** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; verified for headless cold boot and remote operation from MAIN through Sunshine/Moonlight
+- **managed GPU worker** — RTX 4090 managed worker for vision, Blender, 3D generation, image/video workflows, rendering, local music generation, and other heavy GPU execution
+- **creation workstation** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; verified for headless cold boot and remote operation from MAIN through Sunshine/Moonlight
 - **RTX 3070 PC** — dedicated voice and audio workloads
 - **Steam Deck** — lightweight Aubum router running a small local model with Vulkan acceleration
 - **Medium Brain worker** — GTX 1080 Ti node running a Qwen3.5 9B-class Q6_K model through CUDA with 16K context for intermediate reasoning
@@ -165,7 +165,7 @@ A dedicated laptop now runs an observation-only Guarddog service that independen
 
 MAIN can also verify Guarddog itself, avoiding a design where the monitoring layer could silently fail without detection.
 
-The current private health-check system includes the Guarddog/Memory node, routing/power state, the secure remote-mobile layer, and the dedicated Medium Brain. Health Check v0.6 completed a verified full-system run with:
+The current private health-check system includes the Guarddog/Memory node, routing/power state, the secure remote-mobile layer, and the dedicated Medium Brain. Private records report a Health Check v0.6 run with (raw execution log not published here):
 
 - **30 passing checks**
 - **0 warnings**
