@@ -1,6 +1,6 @@
-# creation workstation Workstation
+# Creation Workstation
 
-`creation workstation` is a dedicated RTX 5080 creation workstation in the private Aubum environment.
+The creation workstation is a dedicated RTX 5080 system in the private Aubum environment.
 
 ## Intended role
 
@@ -25,10 +25,10 @@ Verified as of October 5, 2026:
 - Windows updates completed;
 - NVIDIA developer driver installed;
 - a dedicated hostname configured for the creation workstation;
-- Sunshine host installed on creation workstation;
+- Sunshine host installed on the creation workstation;
 - Sunshine stable release `2026.914.233613` is running and its local web UI is reachable;
 - Moonlight PC client is installed on MAIN;
-- MAIN automatically discovers creation workstation over the local network;
+- MAIN automatically discovers the creation workstation over the local network;
 - Sunshine/Moonlight pairing completed successfully;
 - the creation workstation `Desktop` stream opens successfully from MAIN.
 
@@ -48,7 +48,7 @@ Sunshine host
 creation workstation
 ```
 
-The remote path is intended to let creation workstation operate without a permanent dedicated keyboard, mouse, or monitor.
+The remote path is intended to let the creation workstation operate without a permanent dedicated keyboard, mouse, or monitor.
 
 ## Headless operation status
 
@@ -81,4 +81,4 @@ Machine-specific secrets remain outside the public repository.
 
 The workstation exists to separate interactive graphics workloads from primary-model inference.
 
-Rather than replacing MAIN's RTX 4090, creation workstation provides a second specialized compute/creation node so Unreal, Blender, avatar work, and related tasks do not need to compete directly with the Big Brain for the same GPU and system resources.
+Rather than replacing MAIN's RTX 4090, the creation workstation provides a second specialized compute/creation node so Unreal, Blender, avatar work, and related tasks do not need to compete directly with the Big Brain for the same GPU and system resources.
