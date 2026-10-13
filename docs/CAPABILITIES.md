@@ -30,7 +30,7 @@ The goal is to keep verified behavior separate from experiments and future work.
 | Cross-session memory retrieval | MAIN + laptop | Open WebUI Memory tooling | **Verified** |
 | Automatic relevance-based Memory | MAIN + laptop | Planned recall/write layer | **Planned** |
 | Independent system monitoring | Guarddog laptop | Observation-only health monitoring | **Verified** |
-| Full health aggregation | MAIN | Aubum Health Check v0.6, historically reported 30 PASS / 0 WARN / 0 FAIL (raw run log not included in this repository) | **Verified** |
+| Full health aggregation | MAIN | Aubum Health Check v0.6; historical private report: 30 PASS / 0 WARN / 0 FAIL (raw log not published) | **Reported private result** |
 | Medium Brain health-check coverage | MAIN + Medium worker | TCP reachability + model/API endpoint checks | **Verified** |
 | Desktop visual observation | MAIN / vision worker | Direct screen capture + vision analysis | **Verified** |
 | Condition-aware visual supervision | MAIN / vision worker | Bounded repeated inspection | **Experimental** |
@@ -50,11 +50,11 @@ The goal is to keep verified behavior separate from experiments and future work.
 | Phone-local edge inference | Android | Qwen3 4B-class local model | **Verified** |
 | Storage Librarian / semantic file manager | MAIN + storage | File indexing, classification and move tooling | **Planned** |
 | Generated-media retention cleanup | MAIN + archive storage | Bounded archive/cleanup policy | **Planned** |
-| Worker reboot bootstrap | managed GPU worker RTX 4090 worker | Scheduled headless full-worker bootstrap | **Verified** |
+| Worker reboot bootstrap | RTX 4090 GPU worker | Scheduled headless full-worker bootstrap | **Verified** |
 | Headless creation workstation | creation workstation | Sunshine + Moonlight + virtual display | **Verified** |
 | Automatic hardware capability discovery | Future worker nodes | Worker inventory + benchmark reporting | **Planned** |
 | Portable temporary worker bridge | Android + temporary PC | Bounded remote worker bootstrap | **Planned** |
-| Music / audio generation | managed GPU worker RTX 4090 worker | ACE-Step 1.5 + managed MUSIC mode + Open WebUI tool path | **Verified** |
+| Music / audio generation | RTX 4090 GPU worker | ACE-Step 1.5 + managed MUSIC mode + Open WebUI tool path | **Verified** |
 
 ## Current model roles
 
