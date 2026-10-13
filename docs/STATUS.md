@@ -44,8 +44,8 @@ The private Aubum environment has already been used for:
 As of October 2026, the private Aubum environment is operating across eight heterogeneous devices:
 
 - **MAIN PC** — primary Big Brain, orchestration, reasoning, Open WebUI, system control, and health aggregation
-- **managed GPU worker** — RTX 4090 managed worker handling vision, Blender, 3D generation, image/video workflows, rendering, local music generation, and other heavy GPU execution
-- **creation workstation** — dedicated RTX 5080 creation workstation for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; Sunshine/Moonlight remote desktop and cold-boot headless operation from MAIN are verified
+- **GPU worker** — RTX 4090 managed worker handling vision, Blender, 3D generation, image/video workflows, rendering, local music generation, and other heavy GPU execution
+- **Creation workstation** — dedicated RTX 5080 system for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; Sunshine/Moonlight remote desktop and cold-boot headless operation from MAIN are verified
 - **RTX 3070 PC** — dedicated voice and audio workloads
 - **Steam Deck** — lightweight local routing node using Vulkan-accelerated inference
 - **Medium Brain worker** — GTX 1080 Ti node running a Qwen3.5 9B-class Q6_K model through CUDA with 16K context
@@ -255,7 +255,7 @@ The current near-term infrastructure backlog is:
 
 1. **Storage cleanup and reorganization** before attempting Linux sideloading, so large AI/model/game-development files are intentionally placed instead of being dragged through another operating-system experiment.
 2. **Linux sideloading experiment** after storage is cleaned and free-space/partition requirements are understood.
-3. **managed GPU worker VRAM cleanup** using the same on-demand load / protected active-job / idle-unload pattern proven on MAIN, without disturbing managed GPU worker's known-good worker modes.
+3. **GPU worker VRAM cleanup** using the same on-demand load / protected active-job / idle-unload pattern proven on MAIN, without disturbing the GPU worker's known-good worker modes.
 4. **RTX 3070 voice pipeline** for STT, Aubum response, TTS, and optional voice conversion on the dedicated voice machine.
 5. **Generated-image retention cleanup**: keep Open WebUI preview/manual download behavior, then add bounded automatic cleanup of old generated files instead of automatic phone transfer.
 6. **Portable phone bridge** for temporarily attaching a bounded Aubum worker/helper through the phone when using another PC.
