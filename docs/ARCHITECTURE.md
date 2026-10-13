@@ -95,16 +95,16 @@ The controller tracks the active mode and restores the worker to the appropriate
 
 ### Unreal / Creation Workstation
 
-A separate RTX 5080 workstation named `Unreal5080` is being established as the primary interactive creation machine for:
+A separate RTX 5080 workstation named `creation workstation` is being established as the primary interactive creation machine for:
 
 - Unreal Engine and MetaHuman/avatar development;
 - Blender and other 3D authoring;
 - gaming and graphics-heavy interactive work;
 - selected image/video generation workloads.
 
-This separation is intentional: MAIN keeps the primary Big Brain on its RTX 4090, while Unreal5080 absorbs interactive creation workloads that would otherwise compete with local inference for system RAM, VRAM, and GPU time.
+This separation is intentional: MAIN keeps the primary Big Brain on its RTX 4090, while creation workstation absorbs interactive creation workloads that would otherwise compete with local inference for system RAM, VRAM, and GPU time.
 
-Remote-control access has been verified through Sunshine on Unreal5080 and Moonlight on MAIN. The machines pair successfully over the local network and MAIN can open the Unreal5080 desktop remotely. A virtual display is installed, live unplug testing passed, and a cold-boot headless test succeeded with no physical monitor, keyboard, or mouse attached. Wake-on-LAN remains optional follow-up work.
+Remote-control access has been verified through Sunshine on creation workstation and Moonlight on MAIN. The machines pair successfully over the local network and MAIN can open the creation workstation desktop remotely. A virtual display is installed, live unplug testing passed, and a cold-boot headless test succeeded with no physical monitor, keyboard, or mouse attached. Wake-on-LAN remains optional follow-up work.
 
 ### Managed worker startup persistence
 
@@ -385,7 +385,7 @@ Guarddog checks local Memory
 
 Health Check v0.6 verifies the distributed services, the secure remote-mobile boundary, and the dedicated Medium Brain. Its checks cover the Tailscale service/client, active tailnet connection, tailnet-only Serve configuration, localhost-only Open WebUI binding, local HTTP response, Medium Brain TCP reachability, and the Medium Brain model/API endpoint. The phone itself is not required to be online for infrastructure health.
 
-A verified v0.6 run completed with **30 PASS / 0 WARN / 0 FAIL**.
+The private project documentation records a historical v0.6 result of **30 PASS / 0 WARN / 0 FAIL**. The raw execution log is not published here; this is a reported private test result, not an independently reproducible public test.
 
 The checker remains read-only. It also recognizes the primary Big Brain's intentionally asleep state as healthy when Gatekeeper reports that expected state, so normal on-demand GPU power management is not treated as a failure.
 
