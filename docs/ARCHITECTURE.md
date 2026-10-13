@@ -95,16 +95,16 @@ The controller tracks the active mode and restores the worker to the appropriate
 
 ### Unreal / Creation Workstation
 
-A separate RTX 5080 workstation named `creation workstation` is being established as the primary interactive creation machine for:
+A separate RTX 5080 creation workstation is being established as the primary interactive creation machine for:
 
 - Unreal Engine and MetaHuman/avatar development;
 - Blender and other 3D authoring;
 - gaming and graphics-heavy interactive work;
 - selected image/video generation workloads.
 
-This separation is intentional: MAIN keeps the primary Big Brain on its RTX 4090, while creation workstation absorbs interactive creation workloads that would otherwise compete with local inference for system RAM, VRAM, and GPU time.
+This separation is intentional: MAIN keeps the primary Big Brain on its RTX 4090, while the creation workstation absorbs interactive creation workloads that would otherwise compete with local inference for system RAM, VRAM, and GPU time.
 
-Remote-control access has been verified through Sunshine on creation workstation and Moonlight on MAIN. The machines pair successfully over the local network and MAIN can open the creation workstation desktop remotely. A virtual display is installed, live unplug testing passed, and a cold-boot headless test succeeded with no physical monitor, keyboard, or mouse attached. Wake-on-LAN remains optional follow-up work.
+Remote-control access has been verified through Sunshine on the creation workstation and Moonlight on MAIN. The machines pair successfully over the local network and MAIN can open the creation workstation desktop remotely. A virtual display is installed, live unplug testing passed, and a cold-boot headless test succeeded with no physical monitor, keyboard, or mouse attached. Wake-on-LAN remains optional follow-up work.
 
 ### Managed worker startup persistence
 
