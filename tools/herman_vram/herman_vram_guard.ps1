@@ -8,23 +8,22 @@ param(
 $ErrorActionPreference = "Stop"
 
 <#
-Public-safe extraction of the verified Herman VRAM lifecycle.
+Public example of a managed GPU worker VRAM lifecycle.
 
-Expected controller contract:
+Illustrative controller contract (not all routes are confirmed on every deployed version):
   GET  /status
   POST /mode/vision
   POST /mode/comfy
-  POST /mode/hunyuan
   POST /mode/idle
 
-The production controller owns process identity checks, startup/shutdown,
+The private controller is expected to own process identity checks, startup/shutdown,
 ComfyUI model release, and mode-specific safety. This helper preserves the
-verified lifecycle used by the private prototype:
+intended lifecycle based on the private prototype:
 
   inspect current mode -> verify it -> enter IDLE -> measure GPU memory
   -> optionally restore the exact previous mode -> verify restoration
 
-No private tokens, machine addresses, model paths, or credentials are stored
+No private tokens, LAN addresses, model paths, or credentials are stored
 in this public version.
 #>
 
