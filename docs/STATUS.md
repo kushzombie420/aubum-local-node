@@ -43,7 +43,7 @@ The private Aubum environment has already been used for:
 
 As of October 2026, the private Aubum environment is operating across eight heterogeneous devices:
 
-- **MAIN PC** — primary Big Brain, orchestration, reasoning, Open WebUI, system control, and health aggregation
+- **MAIN PC** — primary Qwen3.8 27B-class Q4_K_P Big Brain through CUDA llama.cpp, orchestration, reasoning, Open WebUI, system control, and health aggregation
 - **GPU worker** — RTX 4090 managed worker handling vision, Blender, 3D generation, image/video workflows, rendering, local music generation, and other heavy GPU execution
 - **Creation workstation** — dedicated RTX 5080 system for Unreal Engine, Blender, avatar/game-development work, gaming, and selected image/video workloads; Sunshine/Moonlight remote desktop and cold-boot headless operation from MAIN are verified
 - **RTX 3070 PC** — dedicated voice and audio workloads
@@ -77,6 +77,22 @@ A sanitized summary is documented in [Recovery Baseline — 2026-10-09](RECOVERY
 
 ## Recently verified private milestones
 
+### Qwen3.8 Big Brain production promotion
+
+On October 16, 2026, the primary Big Brain was promoted from the prior Qwen3.6 27B-class Q4_K_P baseline to a Qwen3.8 27B-class Q4_K_P GGUF.
+
+Verified behavior:
+
+- Qwen3.8 runs through CUDA-enabled llama.cpp build **b11669** on MAIN's RTX 4090;
+- the production context remains **32K** with one inference slot and reasoning disabled for normal responses;
+- direct generation measured approximately **42.4 tok/s**, effectively matching the previous approximately **42.57 tok/s** Qwen3.6 CUDA baseline;
+- end-to-end **Open WebUI -> Sentinel -> Gatekeeper -> Qwen3.8** wake and response succeeded;
+- the prior Qwen3.6 configuration was preserved as a rollback baseline;
+- the chat `sleep` path now waits for Gatekeeper confirmation before reporting that the Big Brain is asleep;
+- a traced Open WebUI follow-up-prediction request that previously re-woke the Big Brain after sleep is now recognized as housekeeping and routed to SMALL.
+
+This promotion demonstrated that the Big Brain can be replaced behind the existing Gatekeeper/Sentinel interfaces without redesigning the surrounding routing architecture.
+
 ### CUDA inference acceleration and PDF reading
 
 The primary 27B Big Brain has been moved to a CUDA-enabled llama.cpp build on MAIN's RTX 4090.
@@ -104,7 +120,7 @@ Verified behavior:
 - duplicate wake/process protection prevents multiple copies of the Big Brain from launching;
 - active-request protection prevents sleep while work is still being served;
 - the Big Brain automatically unloads after 900 seconds of inactivity;
-- Open WebUI model polling and housekeeping requests such as title generation, follow-up suggestions, and tag generation are kept on the SMALL path so they do not wake the 27B;
+- Open WebUI model polling and housekeeping requests such as title generation, tag generation, legacy follow-up suggestions, and the current `Predict 3-5 useful messages...` follow-up-prediction prompt are kept on the SMALL path so they do not wake the 27B;
 - health checks report Sentinel, Gatekeeper, Big Brain state, active requests, and idle timeout without waking the Big Brain;
 - an end-to-end Open WebUI arithmetic test was answered by the Steam Deck while the primary RTX 4090 remained free;
 - the Medium Brain was verified at approximately **34.3 tok/s** with Q6_K and 16K context;
@@ -127,7 +143,7 @@ Verified behavior:
 - the local `status` command is handled without Big Brain inference and reports Big Brain state, active requests, and idle timing;
 - the local `sleep` command is handled by Sentinel and delegated to a Gatekeeper control endpoint;
 - Gatekeeper retains ownership of the shutdown path, including active-request and wake-state safety checks;
-- chat-controlled sleep has been verified to unload the primary 27B model from RTX 4090 VRAM.
+- chat-controlled sleep has been verified to unload the primary 27B model from RTX 4090 VRAM, and Sentinel now reports sleep success only after Gatekeeper confirms the asleep state.
 
 The current implementation intentionally avoids adding a separate hard-coded web-search routing rule until real behavior demonstrates one is necessary.
 

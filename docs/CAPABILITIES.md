@@ -15,14 +15,15 @@ The goal is to keep verified behavior separate from experiments and future work.
 
 | Capability | Current role / node | Model or system | Status |
 |---|---|---|---|
-| Primary reasoning | MAIN RTX 4090 | Qwen3.6 27B-class GGUF through llama.cpp CUDA | **Verified** |
+| Primary reasoning | MAIN RTX 4090 | Qwen3.8 27B-class Q4_K_P GGUF through llama.cpp CUDA | **Verified** |
 | Lightweight request routing | Steam Deck | Qwen3 1.7B-class local model with Vulkan acceleration | **Verified** |
 | Dedicated medium reasoning | GTX 1080 Ti worker | Qwen3.5 9B-class Q6_K GGUF through llama.cpp CUDA, 16K context | **Verified** |
 | Three-tier request routing | MAIN + Steam Deck + Medium worker | Sentinel SMALL / MEDIUM / BIG routing | **Verified** |
 | On-demand Big Brain wake | MAIN | Sentinel + Gatekeeper + llama.cpp | **Verified** |
 | Idle Big Brain unload | MAIN | 15-minute protected idle timeout | **Verified** |
 | Active-request sleep protection | MAIN | Gatekeeper request tracking | **Verified** |
-| Chat resource controls | MAIN | Local `status` and `sleep` commands | **Verified** |
+| Chat resource controls | MAIN | Local `status` and Gatekeeper-confirmed `sleep` commands | **Verified** |
+| Open WebUI housekeeping isolation | MAIN + Steam Deck | Title/tag/follow-up prediction routed to SMALL without waking BIG | **Verified** |
 | Live web research | MAIN | Open WebUI search + primary reasoning model | **Verified** |
 | Source-cited web answers | MAIN | Open WebUI search integration | **Verified** |
 | PDF / document reading | MAIN | Local text extraction + reasoning | **Verified** |
@@ -62,7 +63,7 @@ The private prototype intentionally uses different model sizes for different job
 
 | Role | Current model family | Why it is used |
 |---|---|---|
-| Primary Big Brain | Qwen3.6 27B-class GGUF | Main reasoning, coding, synthesis, complex requests |
+| Primary Big Brain | Qwen3.8 27B-class Q4_K_P GGUF | Main reasoning, coding, synthesis, complex requests |
 | Medium Brain | Qwen3.5 9B-class Q6_K GGUF | Intermediate conversational/contextual reasoning without waking the primary 27B |
 | Steam Deck router | Qwen3 1.7B-class | Cheap classification/routing without occupying the primary GPU |
 | Vision | Qwen3-VL 8B-class | Image, camera, and saved-evidence inspection |
@@ -81,6 +82,8 @@ A direct backend comparison on the same primary 27B model and RTX 4090 measured 
 - **2775.6 tok/s** prompt processing after the CUDA migration.
 
 That is roughly a **7.5x generation-speed improvement** and a **3x prompt-processing improvement** while preserving the existing 32K-context production setup.
+
+The current Qwen3.8 production promotion was separately tested at approximately **42.4 tok/s** generation with the same 32K context target, effectively matching the prior Qwen3.6 CUDA generation baseline while moving the Big Brain to llama.cpp build **b11669**. The previous Qwen3.6 configuration remains preserved for rollback.
 
 ## Current health baseline
 

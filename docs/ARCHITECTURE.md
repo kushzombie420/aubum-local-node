@@ -263,7 +263,9 @@ Aubum intentionally assigns specialized roles to different hardware.
 
 The private MAIN deployment uses a CUDA-enabled llama.cpp build for the primary 27B reasoning model on an RTX 4090.
 
-A verified backend comparison on the same model and hardware measured approximately:
+As of October 16, 2026, the production Big Brain is a Qwen3.8 27B-class Q4_K_P GGUF running through llama.cpp build **b11669** with a 32K context window. The prior Qwen3.6 configuration remains preserved as a rollback baseline.
+
+A verified historical backend comparison on the prior model and the same hardware measured approximately:
 
 - **5.71 tok/s** generation with the earlier Vulkan path;
 - **42.57 tok/s** generation with CUDA;
@@ -296,7 +298,7 @@ Qwen3-1.7B  9B CUDA node         |
                        idle timeout -> unload
 ```
 
-The production path is designed so that model discovery, health checks, and known Open WebUI housekeeping requests do not wake the Big Brain. Simple work can stay on the lightweight route, conversational/contextual work can use the dedicated Medium Brain, and hard or explicitly complex work can escalate through Gatekeeper. Duplicate-launch protection and active-request protection prevent unnecessary parallel loads or premature sleep.
+The production path is designed so that model discovery, health checks, and known Open WebUI housekeeping requests do not wake the Big Brain. The housekeeping set includes title/tag generation and both the legacy follow-up-suggestion prompt and the current `Predict 3-5 useful messages...` follow-up-prediction prompt. Simple work can stay on the lightweight route, conversational/contextual work can use the dedicated Medium Brain, and hard or explicitly complex work can escalate through Gatekeeper. Duplicate-launch protection and active-request protection prevent unnecessary parallel loads or premature sleep.
 
 Production verification passed all three routes: SMALL, MEDIUM, and BIG.
 
@@ -308,9 +310,9 @@ The current private implementation also exposes a small control surface through 
 
 `status` is intercepted locally by Sentinel and reports routing state without requiring Big Brain inference.
 
-`sleep` is also intercepted locally, but Sentinel does not directly terminate the model. Instead it calls a local Gatekeeper control endpoint. Gatekeeper then applies the same request-safety checks used by automatic idle sleep before invoking the existing Big Brain shutdown path.
+`sleep` is also intercepted locally, but Sentinel does not directly terminate the model. Instead it calls a local Gatekeeper control endpoint. Gatekeeper then applies the same request-safety checks used by automatic idle sleep before invoking the existing Big Brain shutdown path. Sentinel waits for the Gatekeeper result and reports success only after the asleep state is confirmed.
 
-This keeps conversational convenience separate from resource ownership: Sentinel recognizes the command, while Gatekeeper remains authoritative for whether the primary model may safely unload.
+This keeps conversational convenience separate from resource ownership: Sentinel recognizes the command, while Gatekeeper remains authoritative for whether the primary model may safely unload. Post-response Open WebUI housekeeping is routed away from BIG so background follow-up generation cannot immediately resurrect a manually slept Big Brain.
 
 ### Web research path
 

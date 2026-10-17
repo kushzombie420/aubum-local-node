@@ -10,6 +10,7 @@ The project grew out of Aubum, a working private AI orchestration prototype that
 - [Capabilities & Models](docs/CAPABILITIES.md)
 - [Current Status](docs/STATUS.md)
 - [Recovery Baseline — 2026-10-09](docs/RECOVERY_BASELINE_2026-10-09.md)
+- [Big Brain Baseline — 2026-10-16](docs/BIG_BRAIN_BASELINE_2026-10-16.md)
 - [Worker Protocol Draft](docs/WORKER_PROTOCOL.md)
 - [Creation Workstation](docs/UNREAL5080.md)
 
@@ -74,6 +75,20 @@ This deployment remains part of the private Aubum development environment. The p
 
 ## Recent Verified Milestones
 
+### Qwen3.8 Big Brain promotion and sleep-route hardening
+
+On October 16, 2026, the private prototype promoted its primary 27B Big Brain from a Qwen3.6 27B-class Q4_K_P GGUF to a Qwen3.8 27B-class Q4_K_P GGUF after isolated A/B testing and an end-to-end production-path check.
+
+Verified promotion baseline:
+
+- CUDA-enabled llama.cpp build **b11669**;
+- **32K context**, one inference slot, GPU offload, and reasoning disabled for normal production responses;
+- approximately **42.4 tok/s** generation in the direct Qwen3.8 test, effectively matching the prior approximately **42.57 tok/s** Qwen3.6 CUDA baseline;
+- the full **Open WebUI -> Sentinel -> Gatekeeper -> Qwen3.8** wake-and-response path verified;
+- the previous Qwen3.6 Big Brain preserved as a rollback baseline.
+
+During the promotion, an Open WebUI background follow-up-prediction request beginning with `Predict 3-5 useful messages...` was found to inherit conversation terms such as Unreal/debug and trigger the BIG hard rule immediately after a manual sleep. Sentinel now classifies that current housekeeping prompt on the SMALL path, and the `sleep` command reports success only after Gatekeeper confirms that the Big Brain is asleep. A before/after trace verified that the same post-sleep follow-up request now stays on SMALL instead of re-waking the 27B model.
+
 ### CUDA inference acceleration and PDF reading
 
 The private prototype's primary 27B Big Brain now runs through a CUDA-enabled llama.cpp build on the RTX 4090.
@@ -97,7 +112,7 @@ Verified behavior includes:
 - duplicate wake/process protection prevents repeated model launches;
 - active-request protection prevents the Big Brain from being put to sleep while work is still running;
 - the Big Brain unloads automatically after 15 minutes of inactivity, releasing RTX 4090 VRAM;
-- model-list polling, automatic chat-title generation, follow-up suggestions, tags, and health checks no longer wake the Big Brain unnecessarily;
+- model-list polling, automatic chat-title generation, follow-up suggestions (including the current `Predict 3-5 useful messages...` prompt), tags, and health checks are kept off the BIG path so they do not wake the Big Brain unnecessarily;
 - an end-to-end Open WebUI test confirmed a simple arithmetic request was answered by the Steam Deck while the Big Brain remained asleep;
 - a complex Unreal Engine debugging request was verified to take the BIG route and wake the primary reasoning model.
 
