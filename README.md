@@ -158,21 +158,25 @@ Verified behavior includes:
 
 This extends the phone from a local-network controller into a secure remote interface without opening a public inbound port to Open WebUI.
 
-### Managed worker music generation and reboot bootstrap
+### Managed music generation, XL Turbo, and worker bootstrap
 
-The private prototype now includes verified local music generation on the managed RTX 4090 worker.
+The private prototype now has a verified local music-generation path using ACE-Step 1.5 XL Turbo on its managed GPU worker, while retaining the earlier ACE-Step 1.5 queue path as a rollback option.
 
-Verified behavior includes:
+Verified behavior:
 
-- ACE-Step 1.5 running as an on-demand specialist workload on the managed GPU worker;
-- controller-managed switching into and out of a dedicated MUSIC mode;
-- REST-based generation initiated from the normal Aubum chat interface;
-- finished audio copied back to MAIN and attached in Open WebUI;
-- temporary API-generation output on the worker cleaned after the job;
-- the worker restored to its prior managed state after generation;
-- a full end-to-end chat request successfully produced and returned a playable music track.
+- music requests are initiated through the normal Aubum/Open WebUI chat path and return a real audio attachment;
+- the XL Turbo backend is reached through an authenticated managed transport with serialized managed-job ownership and artifact integrity checks;
+- the current private tool/transport implementation supports whole-second durations from **10 to 600 seconds**;
+- real **120-second** and **600-second (10-minute)** WAVs were generated and delivered through normal chat;
+- the ten-minute WAV was independently checked for exact duration, valid WAV structure, matching artifact hash, and audio signal throughout the file;
+- user-supplied lyrics were passed through the tool and a resulting song was delivered; a separate song request without supplied lyrics also returned audio;
+- the existing legacy queue/rollback path remains preserved.
 
-The worker's normal bootstrap path is also scheduled at Windows startup and was verified after a reboot without manually launching the desktop bootstrap.
+The live duration tests establish the 120-second and 600-second cases; they do not imply that every possible duration has been live-tested. Vocal presence, lyric adherence, genre/style fidelity, and comparative audio quality still need a controlled listening review. The first full-length integration is part of the private prototype and is not yet packaged as a public installable component.
+
+The managed XL worker remains resident during this request profile. The verified guarantee covers serialized requests through the managed chat path; concurrent use through independent local interfaces is outside the tested scope.
+
+The worker's normal bootstrap path remains scheduled at Windows startup. Earlier post-reboot tests verified that the controller and normal VISION-ready state returned automatically without manually launching the desktop bootstrap.
 
 ### Independent Guarddog monitoring
 
