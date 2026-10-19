@@ -320,6 +320,12 @@ Aubum Local Node is being developed by an independent developer and AI enthusias
 
 The project is currently self-funded and under active development.
 
+## Connect
+
+- **Developer:** [Rick Butts on LinkedIn](https://www.linkedin.com/in/rick-butts-333b4835a)
+- **GitHub profile:** [kushzombie420](https://github.com/kushzombie420)
+- **Project repository:** [Aubum Local Node](https://github.com/kushzombie420/aubum-local-node)
+
 ## License
 
 The public Aubum Local Node project is intended to be released under an open-source license.
