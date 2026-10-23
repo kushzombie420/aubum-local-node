@@ -10,9 +10,18 @@ The project grew out of Aubum, a working private AI orchestration prototype that
 - [Capabilities & Models](docs/CAPABILITIES.md)
 - [Current Status](docs/STATUS.md)
 - [Recovery Baseline — 2026-10-09](docs/RECOVERY_BASELINE_2026-10-09.md)
+- [Shared-GPU Recovery — 2026-10-23](docs/RECOVERY_2026-10-23.md)
 - [Big Brain Baseline — 2026-10-16](docs/BIG_BRAIN_BASELINE_2026-10-16.md)
 - [Worker Protocol Draft](docs/WORKER_PROTOCOL.md)
 - [Creation Workstation](docs/UNREAL5080.md)
+
+## October 23, 2026: Shared-GPU recovery, live verified
+
+The private Aubum prototype recovered its shared-GPU creative workflows by using **explicit manual mode selection** on the existing worker controller, rather than waiting for unfinished protected automatic-handoff infrastructure. From MAIN, the operator can select **MUSIC** (standard ACE-Step 1.5), **PHOTO** (Qwen Image 2.1), or **VISION** on the managed GPU worker.
+
+Live user-path evidence on October 23 includes a MUSIC → PHOTO → MUSIC round trip, two completed PHOTO generations, audio generated through Open WebUI with its **legacy** MUSIC backend, a successful MUSIC → VISION transition from MAIN, and actual image inspection via the VISION tool. The MAIN-side mode-selector buttons also passed remote status and switching checks. **This is a manually supervised workflow, not automatic job handoff or a complete public installation.**
+
+The private protected/XL Turbo startup work remains separately staged; earlier XL Turbo tests are historical evidence, not proof that protected automatic switching is now active. Read the [October 23 recovery case study](docs/RECOVERY_2026-10-23.md) for the failures, tradeoffs, live checks, and remaining limitations.
 
 ## Goal
 
@@ -160,13 +169,13 @@ This extends the phone from a local-network controller into a secure remote inte
 
 ### Managed music generation, XL Turbo, and worker bootstrap
 
-The private prototype now has a verified local music-generation path using ACE-Step 1.5 XL Turbo on its managed GPU worker, while retaining the earlier ACE-Step 1.5 queue path as a rollback option.
+Earlier private-prototype tests verified an ACE-Step 1.5 XL Turbo music-generation path on the managed GPU worker. **As of the October 23 recovery, the currently demonstrated manual MUSIC workflow uses the preserved standard ACE-Step 1.5 backend; protected XL Turbo activation and automatic shared-GPU handoff remain deferred.**
 
-Verified behavior:
+Historical XL Turbo test evidence:
 
-- music requests are initiated through the normal Aubum/Open WebUI chat path and return a real audio attachment;
+- music requests were initiated through the normal Aubum/Open WebUI chat path and returned a real audio attachment;
 - the XL Turbo backend is reached through an authenticated managed transport with serialized managed-job ownership and artifact integrity checks;
-- the current private tool/transport implementation supports whole-second durations from **10 to 600 seconds**;
+- the reviewed XL tool/transport implementation supported whole-second durations from **10 to 600 seconds**;
 - real **120-second** and **600-second (10-minute)** WAVs were generated and delivered through normal chat;
 - the ten-minute WAV was independently checked for exact duration, valid WAV structure, matching artifact hash, and audio signal throughout the file;
 - user-supplied lyrics were passed through the tool and a resulting song was delivered; a separate song request without supplied lyrics also returned audio;
@@ -174,9 +183,9 @@ Verified behavior:
 
 The live duration tests establish the 120-second and 600-second cases; they do not imply that every possible duration has been live-tested. Vocal presence, lyric adherence, genre/style fidelity, and comparative audio quality still need a controlled listening review. The first full-length integration is part of the private prototype and is not yet packaged as a public installable component.
 
-The managed XL worker remains resident during this request profile. The verified guarantee covers serialized requests through the managed chat path; concurrent use through independent local interfaces is outside the tested scope.
+During that earlier XL test profile, the managed XL worker remained resident. The verified guarantee covers serialized requests through the managed chat path; concurrent use through independent local interfaces is outside the tested scope.
 
-The worker's normal bootstrap path remains scheduled at Windows startup. Earlier post-reboot tests verified that the controller and normal VISION-ready state returned automatically without manually launching the desktop bootstrap.
+A previous Windows startup test verified that the controller and normal VISION-ready state returned automatically without manually launching the desktop bootstrap. This historical startup result is not a fresh October 23 post-reboot verification of the manual-mode setup.
 
 ### Independent Guarddog monitoring
 
