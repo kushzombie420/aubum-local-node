@@ -55,19 +55,23 @@ The goal is to keep verified behavior separate from experiments and future work.
 | Headless creation workstation | creation workstation | Sunshine + Moonlight + virtual display | **Verified** |
 | Automatic hardware capability discovery | Future worker nodes | Worker inventory + benchmark reporting | **Planned** |
 | Portable temporary worker bridge | Android + temporary PC | Bounded remote worker bootstrap | **Planned** |
-| Music / audio generation | RTX 4090 GPU worker | ACE-Step 1.5 XL Turbo + authenticated managed transport + serialized chat jobs; 10–600 s source range, live 120 s and 600 s deliveries | **Verified privately; public extraction pending** |
+| Manual shared-GPU selection | MAIN + RTX 4090 GPU worker | Operator-directed MUSIC (standard ACE-Step 1.5), PHOTO (Qwen Image 2.1), and VISION; partial transition matrix verified | **Live verified privately, supervised (Oct 23)** |
+| Music / audio generation (active MUSIC mode) | RTX 4090 GPU worker | Standard ACE-Step 1.5 through preserved legacy backend; audio generated through Open WebUI | **Live verified privately (Oct 23)** |
+| ACE-Step XL Turbo (earlier managed tests) | RTX 4090 GPU worker | Authenticated managed transport; 10–600 s source range; live 120 s and 600 s deliveries | **Historical live verification; protected startup deferred** |
 
 ## Music-generation verification — private prototype
 
-The private prototype's music path now uses ACE-Step 1.5 XL Turbo behind the managed worker interface, with the earlier ACE-Step 1.5 queue path retained as rollback.
+As of October 23, 2026, the active operator-selected **MUSIC** mode uses standard ACE-Step 1.5 through the preserved legacy backend. Real audio was generated locally and through Open WebUI. The GPU worker's **PHOTO** and **VISION** modes are selected explicitly from MAIN; this is supervised manual operation, not automatic handoff.
 
-- The current private tool/transport source supports **10–600 whole seconds**.
+Earlier private tests separately verified ACE-Step 1.5 **XL Turbo** through an authenticated managed transport. The following results are historical, not evidence that protected XL Turbo startup is active in the recovered October 23 configuration:
+
+- The reviewed XL Turbo tool/transport source supports **10–600 whole seconds**.
 - Real normal-chat generations were delivered at **120 seconds** and **600 seconds**.
 - The ten-minute WAV was independently checked for exact duration, valid WAV structure, artifact hash agreement, and audio signal across the file.
 - A supplied-lyrics test passed the lyrics into the tool and delivered audio.
 - The full-duration source and transport changes passed offline boundary/integrity checks before live tests.
 
-Only the 120-second and 600-second points have been live-tested; the entire range is not claimed as exhaustively tested. Vocal presence, lyric adherence, genre/style fidelity, and comparative quality remain open listening-evaluation items. This integration is verified in the private prototype but is not yet shipped as a public installable component.
+Only the 120-second and 600-second XL Turbo points were live-tested; the entire range was not exhaustively tested. Vocal presence, lyric adherence, genre/style fidelity, and comparative quality remain open listening-evaluation items. Protected XL Turbo startup and automatic shared-GPU handoff were **not activated** in the October 23 recovery, and the integration is not yet shipped as a public installable component. See the [October 23 recovery case study](RECOVERY_2026-10-23.md) for the active manual-mode boundary.
 
 ## Current model roles
 
