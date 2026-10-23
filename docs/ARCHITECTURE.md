@@ -91,7 +91,27 @@ A dedicated high-end GPU workstation handles workloads including:
 
 The worker uses managed workload modes so incompatible GPU services do not need to remain loaded simultaneously.
 
-The controller tracks the active mode and restores the worker to the appropriate state after jobs. The current managed worker has also verified a dedicated MUSIC mode, including clean switching with vision workloads, return-to-idle behavior, temporary API-output cleanup, and end-to-end chat-driven generation.
+The existing worker controller tracks the selected mode and can start or stop the corresponding services. Some earlier tool flows used automatic prior-mode restoration; the October 23 recovery deliberately uses explicit manual mode selection for MUSIC, PHOTO, and VISION until stronger automatic handoff can be proven safe.
+
+### October 23 manual GPU mode control
+
+The private GPU worker now has a **live-verified, operator-directed** selection path for three mutually competing workloads:
+
+| Selected mode | Current demonstrated workload | Verification |
+| --- | --- | --- |
+| MUSIC | Standard ACE-Step 1.5 music generation | Generated real audio in the native interface and through Open WebUI with the legacy backend. |
+| PHOTO | Qwen Image 2.1 generation | Generated two real images through Open WebUI. |
+| VISION | Visual understanding | Completed image inspection through the dedicated vision tool. |
+
+In the recovered workflow, **MAIN shortcut → existing worker controller → one selected worker → application/tool request**. User-observed transitions include MUSIC → PHOTO → MUSIC and MUSIC → VISION. Other possible transitions, including the return from VISION, were not separately documented as live-passed at this checkpoint.
+
+This is intentionally *manual*, not automatic handoff. The operator confirms that jobs are finished and relevant outputs are saved before switching. The controller verifies its selected listener and process identity, but a ready listener is not proof of a finished generation, global GPU idle state, or complete descendant containment. The legacy controller may force-stop a prior worker and remove temporary MUSIC outputs, so the controls provide explicit warnings and conservative refusals.
+
+The protected XL Turbo control/automatic-handoff work was preserved for separate development instead of being promoted during this recovery. Previous XL Turbo and scheduled bootstrap test milestones remain historical evidence, not the active acceptance criteria for the standard MUSIC/PHOTO/VISION manual path.
+
+**Scope separation:** SMALL/MEDIUM/BIG reasoning routes and Big Brain wake/sleep are distinct from these shared-GPU creative modes. The October 23 decision did not abandon distributed request routing or other Aubum automation. It limited the promotion of new orchestration on one competing GPU worker.
+
+See [October 23 shared-GPU recovery](RECOVERY_2026-10-23.md) for the end-to-end evidence and operational caveats.
 
 ### Unreal / Creation Workstation
 
