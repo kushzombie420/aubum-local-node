@@ -2,6 +2,23 @@
 
 This document separates what is already working in the private Aubum prototype from what is currently being moved into the public Aubum Local Node project.
 
+## October 23, 2026: Live recovery checkpoint
+
+A supervised recovery of the private shared-GPU media worker restored practical **manual** workload selection from MAIN. The operator selects a mode through local command shortcuts; the existing GPU-worker controller starts and verifies the selected worker. This does not imply that jobs automatically switch modes or that every transition has been tested.
+
+| Capability | User-observed October 23 result | Scope |
+| --- | --- | --- |
+| MUSIC (standard ACE-Step 1.5) | **LIVE PASS** | Generated audio locally on the GPU worker and later a song through Open WebUI using the legacy backend. |
+| PHOTO (Qwen Image 2.1) | **LIVE PASS** | Two successful image generations returned to Open WebUI and saved. |
+| VISION | **LIVE PASS** | The image-inspection tool executed on the VISION worker and returned visually grounded details. |
+| MAIN-driven selection | **LIVE PASS, partial matrix** | MUSIC → PHOTO → MUSIC and MUSIC → VISION verified through remote controls; a complete three-mode transition matrix was not separately established. |
+| Protected XL Turbo manual startup | **NOT ACTIVE / DEFERRED** | Earlier XL Turbo generation tests remain valid historical results, but the protected manual startup and automatic-handoff activation were not completed. |
+| Public installation of private orchestration | **NOT RELEASED** | This repository documents the prototype; the reusable manual client still requires sanitization and generalization. |
+
+**Operational boundary:** The current controller may force-stop outgoing workers and remove temporary MUSIC API output folders. Operators must finish requests and preserve desired outputs before selecting another mode. The controls cannot independently prove every background request has completed. An XL Turbo ownership conflict during recovery was isolated; guarded local job-lock archiving plus selecting the existing legacy music backend restored Open WebUI MUSIC generation. No ownership database was rewritten.
+
+See [Shared-GPU Recovery — October 23](RECOVERY_2026-10-23.md) for the dated sequence and verification limitations. SMALL/MEDIUM/BIG request routing and the other Aubum nodes are separate from this manual shared-GPU selection decision.
+
 ## Working in the private prototype
 
 The private Aubum environment has already been used for:
@@ -165,13 +182,13 @@ Generated images remain previewable and manually downloadable through Open WebUI
 
 ### Managed music generation, XL Turbo, and worker auto-bootstrap
 
-The private managed GPU worker's music path has been upgraded from the earlier ACE-Step 1.5 queue baseline to ACE-Step 1.5 XL Turbo, while retaining the legacy queue/rollback path.
+The private GPU worker previously demonstrated ACE-Step 1.5 XL Turbo generation through a managed transport, with the standard ACE-Step 1.5 path preserved. Following the October 23 recovery, **manual MUSIC operation uses the standard legacy backend; protected XL Turbo activation remains uncompleted.**
 
-Verified behavior:
+Earlier XL Turbo verification included:
 
-- the existing Aubum music tool is used from the normal Open WebUI chat path; no duplicate tool was introduced;
+- the existing Aubum music tool being used from normal Open WebUI chat; no duplicate tool was introduced;
 - XL Turbo requests use an authenticated managed transport, serialized job ownership, and artifact integrity checks;
-- the current private tool/transport implementation accepts whole-second durations from **10 to 600 seconds**;
+- the reviewed XL tool/transport implementation accepting whole-second durations from **10 to 600 seconds**;
 - real **120-second** and **600-second** WAVs were generated and delivered through ordinary chat;
 - the ten-minute WAV was independently checked for an exact 600-second duration, valid WAV structure, matching artifact hash, and non-silent audio throughout the file;
 - a user-supplied-lyrics request passed lyrics into the generation tool and returned audio; a separate concept-only song request also returned audio;
@@ -179,9 +196,9 @@ Verified behavior:
 
 The live duration tests demonstrate 120 seconds and 600 seconds; every intermediate duration has not been live-tested. Vocal/style adherence and comparative audio quality remain qualitative evaluation work, not a completed benchmark. The private XL integration is not yet packaged as a public installable component.
 
-The managed XL worker remains resident in this profile. Serialized managed chat requests are covered; concurrent generation through independent local interfaces is outside the tested guarantee. No global inference-idle claim or automatic GPU shutdown is made.
+During those historical managed XL tests, the XL worker remained resident. Serialized managed chat requests are covered; concurrent generation through independent local interfaces is outside the tested guarantee. No global inference-idle claim or automatic GPU shutdown is made.
 
-The full worker bootstrap remains scheduled at Windows startup. A post-reboot test previously verified that the controller and normal VISION-ready state returned without manually launching the desktop bootstrap.
+A previous post-reboot test verified that the controller and normal VISION-ready state returned without manually launching the desktop bootstrap. That earlier result should not be mistaken for a fresh post-reboot acceptance test of the October 23 manual controls.
 
 ### Guarddog and independent monitoring
 
@@ -299,7 +316,8 @@ Completed:
 - current private heterogeneous deployment documented;
 - independent monitoring concept documented;
 - persistent-memory architecture documented;
-- public capability and model matrix added.
+- public capability and model matrix added;
+- dated October 23 shared-GPU recovery case study added.
 
 In progress:
 
@@ -309,7 +327,8 @@ In progress:
 - job lifecycle definition;
 - failure and recovery behavior;
 - bounded execution model;
-- persistent-state and memory interfaces.
+- persistent-state and memory interfaces;
+- a sanitized, configurable public example of the privately verified three-mode selector, with mockable tests (not yet released).
 
 ## Planned public alpha
 
@@ -340,7 +359,8 @@ The following are goals, not finished public features:
 - unattended long-running workflows;
 - autonomous recovery across all services;
 - cloud/local hybrid routing;
-- production-grade security hardening.
+- production-grade security hardening;
+- unattended, automatically coordinated shared-GPU handoff across MUSIC, PHOTO, and VISION.
 
 ## Development principle
 
