@@ -2,13 +2,26 @@ param(
     [string]$ControllerUrl = "http://127.0.0.1:8090",
     [int]$GpuIndex = 0,
     [switch]$RestorePreviousMode,
-    [int]$HoldSeconds = 0
+    [int]$HoldSeconds = 0,
+    [switch]$AllowDisruptiveIdle
 )
 
 $ErrorActionPreference = "Stop"
 
 <#
 Public example of a managed GPU worker VRAM lifecycle.
+
+WARNING - DISRUPTIVE EXAMPLE, NOT A SAFE MANUAL MUSIC/PHOTO SWITCHER.
+This script sends POST /mode/idle. Depending on the controller, that route may
+force-stop active workers and delete temporary MUSIC API outputs. Listening ports,
+controller IDLE state, and an nvidia-smi memory reading do NOT prove that all
+jobs finished, callbacks drained, or child GPU processes exited.
+
+By default this helper REFUSES to run. -AllowDisruptiveIdle is an explicit
+operator acknowledgement, NOT proof of safety. Do not opt in while requests
+are active; preserve desired outputs first, and review the installed controller
+for mode-specific shutdown effects. The October 23 supervised MUSIC/PHOTO/VISION
+workflow uses explicit mode selection, not this illustrative IDLE helper.
 
 Illustrative controller contract (not all routes are confirmed on every deployed version):
   GET  /status
@@ -26,6 +39,12 @@ intended lifecycle based on the private prototype:
 No private tokens, LAN addresses, model paths, or credentials are stored
 in this public version.
 #>
+
+# Refuse before even contacting the controller unless the operator opts in.
+if (-not $AllowDisruptiveIdle) {
+    throw "REFUSED: this example calls /mode/idle and may stop workers or remove temporary outputs. Read the header and explicitly supply -AllowDisruptiveIdle only for a planned quiet-window operation."
+}
+Write-Warning "DISRUPTIVE EXAMPLE: /mode/idle can stop workers and remove temporary outputs; this script cannot verify all GPU jobs are finished."
 
 function Get-ControllerStatus {
     Invoke-RestMethod -Uri "$ControllerUrl/status" -Method Get -TimeoutSec 15
