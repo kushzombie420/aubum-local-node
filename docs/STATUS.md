@@ -2,6 +2,16 @@
 
 This document separates what is already working in the private Aubum prototype from what is currently being moved into the public Aubum Local Node project.
 
+## October 31, 2026: R2 lease cutover and voice recovery — VERIFIED PRIVATE CHECKPOINT
+
+**DONE / VERIFIED:** The private MAIN + managed-GPU-worker R2 installation completed with ten production tool definitions verified, **9/9** exclusive-lease contention checks passed (including HTTP 409 `GPU_BUSY`), and **3/3** sequential real-chat MUSIC, PHOTO and VISION requests delivered their outputs without manual GPU switching. Post-test GPU state returned to verified VISION with no lease held or corrupt.
+
+**DONE / RESTORED:** The original Open WebUI desktop environment, database, chats and models recovered after a launcher environment mismatch and duplicate instance collision. Conversational Read Aloud was also restored when an existing RTX 3070 TTS worker was found reachable at a new LAN address and the configured TTS base URL was corrected; the original TTS model and service were preserved.
+
+**PLANNED / NOT DONE:** Verify router DHCP reservations and make the voice worker address or hostname stable, with network-conflict checks first. **DEFERRED / HELD OUT:** legacy XL Turbo integration, independent Blender scheduled-task rollover and unrelated legacy callers, and safe cleanup of unused first-run files. **NOT RETESTED HERE:** microphone/STT, Unreal lip sync, arbitrary multi-job concurrency and unattended full-system recovery. The broader Aubum model roadmap remains ongoing.
+
+**Public/private boundary:** This documents observed success on the **private** stack. No private controller sources, credential-bearing configurations, or deployment artifacts have been published as an installable public Aubum Local Node release. See [October 31 controlled GPU lease and voice recovery](R2_CUTOVER_AND_VOICE_RECOVERY_2026-10-31.md) for evidence and caveats. The October 23 section below is a **historical** manual-mode checkpoint; R2 supersedes it only for the private paths it actually tested.
+
 ## October 23, 2026: Live recovery checkpoint
 
 A supervised recovery of the private shared-GPU media worker restored practical **manual** workload selection from MAIN. The operator selects a mode through local command shortcuts; the existing GPU-worker controller starts and verifies the selected worker. This does not imply that jobs automatically switch modes or that every transition has been tested.
