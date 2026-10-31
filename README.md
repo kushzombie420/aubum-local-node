@@ -15,6 +15,14 @@ The project grew out of Aubum, a working private AI orchestration prototype that
 - [Worker Protocol Draft](docs/WORKER_PROTOCOL.md)
 - [Creation Workstation](docs/UNREAL5080.md)
 
+## October 31, 2026: Protected GPU leasing and voice restored — private prototype
+
+A controlled R2 deployment on MAIN and the managed GPU worker added **exclusive lease-based access** to the existing automatic MUSIC / PHOTO / VISION paths. Production checks verified **10/10 updated tool definitions**, a **9/9 lease-contention suite** (including competing jobs rejected with HTTP 409 `GPU_BUSY` and protected release), and **3/3 real Big Brain chat-path media/vision requests** with normal worker-state restoration.
+
+A separate Open WebUI restart incident was recovered without losing the existing production chat/database. Conversational **Read Aloud was also restored** after locating the live RTX 3070 TTS endpoint at a changed LAN address; speech generation and user-facing playback were verified. **Stable voice-worker LAN identity remains planned**, and the router's reason for changing the address was not independently established.
+
+This was a **private-system verification**, not publication of the worker implementation. The public repository still needs a sanitized, reproducible release; legacy XL Turbo and Blender integration were deliberately held out. See [October 31 controlled cutover and voice recovery](docs/R2_CUTOVER_AND_VOICE_RECOVERY_2026-10-31.md) for the test evidence, safety and recovery lessons, and limitations.
+
 ## October 23, 2026: Shared-GPU recovery, live verified
 
 The private Aubum prototype recovered its shared-GPU creative workflows by using **explicit manual mode selection** on the existing worker controller, rather than waiting for unfinished protected automatic-handoff infrastructure. From MAIN, the operator can select **MUSIC** (standard ACE-Step 1.5), **PHOTO** (Qwen Image 2.1), or **VISION** on the managed GPU worker.
