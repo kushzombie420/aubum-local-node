@@ -1,7 +1,7 @@
 # Aubum Studio Neon: Three-Mode Creative Access (Private Prototype)
 
 **Checkpoint:** November 1, 2026 (America/Denver)  
-**Status:** MAIN-driven manual UI access and normal return-to-AUTO observed; some runtime safeguards remain unverified.  
+**Status:** MAIN-driven manual UI access, 3D and music generation, and normal return-to-AUTO observed; restart and busy-job safeguards remain unverified.  
 **Publication scope:** Sanitized engineering notes. **No private app, controller, bridge, credentials, or runnable installation is published here.**
 
 ## What changed
@@ -19,7 +19,7 @@ The private integration reuses the already accepted **R2 exclusive GPU lease** b
 
 ## Observed acceptance on November 1
 
-The following is a record of screenshots and operator confirmations through the actual desktop and browser paths, **not** a claim that every failure mode was tested.
+The following records actual desktop/browser evidence and the user's subsequently supplied generation samples. **The user tested both generators successfully.** The remaining limits describe engineering coverage, not a failure or refusal to test.
 
 | Operator action | Evidence-based result |
 | --- | --- |
@@ -28,7 +28,9 @@ The following is a record of screenshots and operator confirmations through the 
 | 3D GEN -> AUTO | **PASS:** Studio reported normal return to AUTO/IDLE with R2 lease verified free |
 | AUTO -> MUSIC | **PASS:** ACE-Step 1.5 Playground opened on MAIN |
 | MUSIC -> AUTO | **PASS, operator confirmed:** Normal return completed |
-| Interactive generation using either model **from the final Neon sessions** | **NOT TESTED:** The models had earlier generation evidence, but a visible editor alone does not prove new-session inference |
+| 3D generation through Neon-managed Hunyuan | **PASS, user-provided screenshot:** A pumpkin input image and a newly generated mesh are visible in Hunyuan3D 2.1 | Mesh preview demonstrates generation; export of a GLB for this specific sample was not separately shown. |
+| Music generation through Neon-managed ACE-Step | **PASS, user-confirmed and file provided:** Original generated music delivered as an MP3, independently verified as a playable-format 178-second stereo MPEG Layer III file | The audio artifact establishes output; it is not a quality benchmark or proof of concurrent jobs. |
+| Return-to-AUTO **after those specific new generations** | **NOT RE-VERIFIED IN THIS TURN:** Earlier 3D -> AUTO and MUSIC -> AUTO tests passed before these generation samples | Keep earlier return tests PASS; do not assume new post-generation return evidence. |
 | Restart of MAIN and the managed GPU worker, automatic bridge recovery | **NOT TESTED** |
 | Queued/running web jobs, stale browser calls, concurrent switching, network loss | **NOT LIVE ACCEPTED** |
 
@@ -44,7 +46,7 @@ A direct 3D-to-MUSIC handoff was **not** part of this acceptance. The observed p
 
 ## Remaining work
 
-1. **Generation validation:** Complete a representative creation in each Neon-managed session, save the outputs, and verify return to the previous safe automatic state.
+1. **Post-generation return and export:** Representative 3D mesh creation and music generation **PASSED** in Neon-managed sessions. Verify a downloaded GLB if needed, then verify return-to-AUTO after completed, saved generation. Earlier normal returns passed before these sample creations.
 2. **Safe busy-state behavior:** Establish what happens with real queued/running Gradio jobs, stale web sessions, and switching requests before accepting stronger fail-safe claims.
 3. **Restart continuity:** Validate the private companion's startup/authentication and both-mode returns after a planned reboot. Do not imply unattended recovery already works.
 4. **Cleanup without regressions:** Pin the working MAIN shortcut and worker companion locations before archiving superseded test ZIPs or launchers.
