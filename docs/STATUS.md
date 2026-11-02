@@ -2,6 +2,14 @@
 
 This document separates what is already working in the private Aubum prototype from what is currently being moved into the public Aubum Local Node project.
 
+## November 1, 2026: Aubum Studio Neon manual creative access — VERIFIED PRIVATE CHECKPOINT
+
+**DONE / USER-OBSERVED:** A single Neon desktop Studio interface on MAIN offers **3D GEN | AUTO | MUSIC**, with AUTO centered, live R2 status and activity. The operator launched the existing Hunyuan3D 2.1 and ACE-Step 1.5 web interfaces on MAIN while the managed GPU worker ran the applications; **3D → AUTO** returned with the R2 lease reported free, and **MUSIC → AUTO** was separately user-confirmed. The separate private Herman companion was reachable. The underlying October 31 automatic R2 cutover remains the accepted baseline.
+
+**NOT VERIFIED IN THESE STUDIO SESSIONS:** New 3D/music generation, queued/running background-job drain, stale browser admission, reboot persistence, automatic companion restart, catastrophic worker recovery and unattended long-term reliability. Direct **3D → MUSIC** was not tested; the observed path goes through AUTO. Earlier generation tests remain valid historical results, not new Studio-session tests.
+
+**PUBLIC STATUS:** Documentation only; private bridge/controller/app source and deployment artifacts remain unpublished. See [Aubum Studio Neon manual access checkpoint](STUDIO_NEON_MANUAL_ACCESS_2026-11-01.md). Older manual-switching entries below are historical rather than evidence that this Neon interface was previously released.
+
 ## October 31, 2026: R2 lease cutover and voice recovery — VERIFIED PRIVATE CHECKPOINT
 
 **DONE / VERIFIED:** The private MAIN + managed-GPU-worker R2 installation completed with ten production tool definitions verified, **9/9** exclusive-lease contention checks passed (including HTTP 409 `GPU_BUSY`), and **3/3** sequential real-chat MUSIC, PHOTO and VISION requests delivered their outputs without manual GPU switching. Post-test GPU state returned to verified VISION with no lease held or corrupt.
