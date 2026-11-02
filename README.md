@@ -15,6 +15,12 @@ The project grew out of Aubum, a working private AI orchestration prototype that
 - [Worker Protocol Draft](docs/WORKER_PROTOCOL.md)
 - [Creation Workstation](docs/UNREAL5080.md)
 
+## November 1, 2026: Aubum Studio Neon manual creative access — private prototype
+
+The private Aubum system now has **one Neon desktop control on MAIN** for **3D GEN | AUTO | MUSIC**, with AUTO centered. The operator verified opening the existing Hunyuan3D 2.1 and ACE-Step 1.5 browser interfaces on MAIN, plus **3D → AUTO** and **MUSIC → AUTO** normal returns using the existing R2 GPU lease. This is user-facing manual access to the managed GPU worker; the R2 production controller was not replaced.
+
+**Limits:** Generation through those final Studio sessions, restart persistence, queued/busy-job transitions, and unattended crash recovery were **not verified**. This is a sanitized report of a working **private prototype**, not a public installer or a release of private scripts. See [Aubum Studio Neon manual access checkpoint](docs/STUDIO_NEON_MANUAL_ACCESS_2026-11-01.md).
+
 ## October 31, 2026: Protected GPU leasing and voice restored — private prototype
 
 A controlled R2 deployment on MAIN and the managed GPU worker added **exclusive lease-based access** to the existing automatic MUSIC / PHOTO / VISION paths. Production checks verified **10/10 updated tool definitions**, a **9/9 lease-contention suite** (including competing jobs rejected with HTTP 409 `GPU_BUSY` and protected release), and **3/3 real Big Brain chat-path media/vision requests** with normal worker-state restoration.
