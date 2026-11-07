@@ -91,11 +91,11 @@ A dedicated high-end GPU workstation handles workloads including:
 
 The worker uses managed workload modes so incompatible GPU services do not need to remain loaded simultaneously.
 
-The existing worker controller tracks the selected mode and can start or stop the corresponding services. Some earlier tool flows used automatic prior-mode restoration; the October 23 recovery deliberately uses explicit manual mode selection for MUSIC, PHOTO, and VISION until stronger automatic handoff can be proven safe.
+The existing worker controller tracks the selected mode and can start or stop the corresponding services. **Historical distinction:** the October 23 recovery used explicit manual selection; the **October 31 R2 cutover subsequently verified** exclusive-lease guarded automatic MUSIC/PHOTO/VISION calls through the production chat path. These are separate, dated acceptance checkpoints.
 
-### October 23 manual GPU mode control
+### October 23 manual GPU mode control (historical)
 
-The private GPU worker now has a **live-verified, operator-directed** selection path for three mutually competing workloads:
+At the October 23 checkpoint, the private GPU worker had a **live-verified, operator-directed** selection path for three mutually competing workloads:
 
 | Selected mode | Current demonstrated workload | Verification |
 | --- | --- | --- |
@@ -103,7 +103,7 @@ The private GPU worker now has a **live-verified, operator-directed** selection 
 | PHOTO | Qwen Image 2.1 generation | Generated two real images through Open WebUI. |
 | VISION | Visual understanding | Completed image inspection through the dedicated vision tool. |
 
-In the recovered workflow, **MAIN shortcut → existing worker controller → one selected worker → application/tool request**. User-observed transitions include MUSIC → PHOTO → MUSIC and MUSIC → VISION. Other possible transitions, including the return from VISION, were not separately documented as live-passed at this checkpoint.
+At that historical checkpoint, the observed workflow was **MAIN shortcut → existing worker controller → one selected worker → application/tool request**. User-observed transitions include MUSIC → PHOTO → MUSIC and MUSIC → VISION. Other possible transitions, including the return from VISION, were not separately documented as live-passed at this checkpoint.
 
 This is intentionally *manual*, not automatic handoff. The operator confirms that jobs are finished and relevant outputs are saved before switching. The controller verifies its selected listener and process identity, but a ready listener is not proof of a finished generation, global GPU idle state, or complete descendant containment. The legacy controller may force-stop a prior worker and remove temporary MUSIC outputs, so the controls provide explicit warnings and conservative refusals.
 
@@ -113,12 +113,24 @@ The protected XL Turbo control/automatic-handoff work was preserved for separate
 
 See [October 23 shared-GPU recovery](RECOVERY_2026-10-23.md) for the end-to-end evidence and operational caveats.
 
+### October 31 to November 7: R2 guarded orchestration and Watchtower
+
+On October 31, an accepted private R2 controller cutover added **exclusive GPU lease ownership** around the previously existing MUSIC, PHOTO and VISION capabilities. Evidence included **9/9** lease-contention checks, including a protected `GPU_BUSY` refusal, and **3/3** sequential real Open WebUI chat-path requests with the worker returned to its verified mode afterward. This later cutover supersedes the October 23 **manual-only** boundary for the specific R2 paths tested; it does **not** certify arbitrary concurrent callers or every legacy integration. See [R2 cutover and voice recovery](R2_CUTOVER_AND_VOICE_RECOVERY_2026-10-31.md).
+
+On November 1, the separate **Aubum Studio Neon** interface on MAIN provided `3D GEN | AUTO | MUSIC` operator controls while reusing the R2 ownership model. Hunyuan3D generated a mesh preview and ACE-Step generated a completed audio file; observed 3D → AUTO and MUSIC → AUTO returns passed. The **Herman 3D companion required manual startup** at the last verified checkpoint. Unattended restart, all direct cross-mode transitions, and generalized job-drain/crash recovery were not established. See [Studio Neon](STUDIO_NEON_MANUAL_ACCESS_2026-11-01.md).
+
+By November 7, **Watchtower v0.6.6** had a working visual interface showing the main RTX 4090, Herman RTX 4090, Voicebox RTX 3070, Medium Brain GTX 1080 Ti, and Unreal5080 RTX 5080 telemetry, plus the observed MAIN Ryzen CPU thermal snapshot, VRAM history, worker health, R2 lease state, and events. Separate read-only telemetry publisher tasks on Voicebox, Medium Brain, and Unreal5080 received backed-up, repeated one-minute retry configurations. Medium Brain was observed to launch its GPU publisher automatically; uninterrupted fleet reboot or unexpected-crash recovery remains **NOT VERIFIED**. The existing MAIN Big Brain startup launcher and hidden VBS were patched to the current Qwen3.8 production setup, with backups and without changing the live model. The dashboard release/enable buttons are **not yet accepted as working controls**; the existing manually exercised desktop FREE/RESTORE path is retained as a fallback.
+
+Seven private-system DHCP reservations were configured for MAIN, Herman, Voicebox, Medium Brain, Guarddog/Memory, Unreal5080, and Steam Deck. The reservation settings were verified; address persistence after a full shutdown/restart still awaited the planned acceptance test. Do not publish actual LAN addresses or configuration files.
+
+[November 7 Control Panel screenshots and validation notes](CONTROL_PANEL_V066_2026-11-07.md).
+
 ### Unreal / Creation Workstation
 
 A separate RTX 5080 creation workstation is being established as the primary interactive creation machine for:
 
-- Unreal Engine and MetaHuman/avatar development;
-- Blender and other 3D authoring;
+- Unreal Engine game development and MetaHuman / Lewd MetaHuman character creation;
+- interactive 3D development using the established Unreal pipeline (not a new Blender character workflow);
 - gaming and graphics-heavy interactive work;
 - selected image/video generation workloads.
 
@@ -411,7 +423,7 @@ The private project documentation records a historical v0.6 result of **30 PASS 
 
 The checker remains read-only. It also recognizes the primary Big Brain's intentionally asleep state as healthy when Gatekeeper reports that expected state, so normal on-demand GPU power management is not treated as a failure.
 
-Future work will add carefully bounded recovery actions after repeated failures are confirmed.
+Existing GPU telemetry startup retry scheduling was improved November 7, but **bounded unattended recovery and restart behavior are still pending fleet-wide acceptance testing**. More autonomous recovery actions remain future work and must not bypass protected GPU leases or safe process ownership checks.
 
 ## Bounded Autonomy
 
@@ -502,6 +514,7 @@ The private Aubum prototype has already demonstrated:
 - condition-aware visual task supervision;
 - saved visual evidence and follow-up reinspection;
 - independent system monitoring;
+- Watchtower v0.6.6 live fleet dashboard with five NVIDIA GPU feeds and a MAIN CPU temperature snapshot (November 7 private session);
 - cross-machine persistent memory;
 - cross-session memory retrieval;
 - automated health checking, including secure remote-mobile boundary checks;
