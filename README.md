@@ -4,6 +4,16 @@ Aubum Local Node is an open-source project exploring how ordinary consumer PCs, 
 
 The project grew out of Aubum, a working private AI orchestration prototype that I am developing independently.
 
+### Aubum Control Panel v0.6.6 — live prototype
+
+![Aubum Control Panel home screen with multi-node worker health, RTX GPU memory bars, and Creative Studio AUTO mode](docs/control-panel-home.jpg)
+
+**Live Watchtower overview:** Five NVIDIA GPU feeds, MAIN VRAM history, CPU and GPU temperatures, worker status, and read-only alerts.
+
+![Watchtower Overview with five GPU VRAM usage bars and MAIN VRAM pressure history](docs/watchtower-overview.jpg)
+
+[Explore all five annotated screenshots and the verification status](docs/CONTROL_PANEL_V066_2026-11-07.md).
+
 ## November 7, 2026: Aubum Control Panel v0.6.6 / Watchtower — private prototype
 
 The **Aubum Control Panel v0.6.6** is an operational dark-mode interface for the private, local-first Aubum fleet. It combines a home dashboard and **Watchtower** monitoring views with the existing **Creative Studio** mode selector. The latest operator-supplied screenshots show live readings from **MAIN (RTX 4090), Herman (RTX 4090), Voicebox (RTX 3070), Medium Brain (GTX 1080 Ti), and Unreal5080 (RTX 5080)**.
