@@ -2,6 +2,28 @@
 
 This document separates what is already working in the private Aubum prototype from what is currently being moved into the public Aubum Local Node project.
 
+## November 7, 2026: Watchtower v0.6.6 and fleet reliability repair — CURRENT PRIVATE CHECKPOINT
+
+**Scope:** Operator-observed live interface, read-only health checks, backed-up Windows configuration repairs, and available acceptance results on November 7. **This is not a public app release.** [View the five screenshots and verification table](CONTROL_PANEL_V066_2026-11-07.md).
+
+| Area | Verified observation or change | Still not verified |
+| --- | --- | --- |
+| Control Panel / Watchtower v0.6.6 | Working dark-mode Home, Overview, System Info, AI Health, GPU & Thermals and Events views; five NVIDIA GPU feeds and MAIN Ryzen CPU temperature displayed in user screenshots. | Cold-start availability, universal service coverage, and dashboard GPU release controls. |
+| Independent health | Captured Guarddog + Memory **2/2 HEALTHY** report and R2 IDLE/FREE state; some transient UNKNOWN events appear in the history. | Continuous uninterrupted health and all other worker workflows. |
+| Router network identity | Seven DHCP reservations configured and reported verified for MAIN, Herman, Voicebox, Medium Brain, Guarddog/Memory, Unreal5080 and Steam Deck. | Persistence across the planned shutdown/reboot and every reconnection. |
+| Voicebox RTX 3070 telemetry | Existing scheduled task backed up; boot trigger and duplicate protection preserved; indefinite one-minute retry added and verified; publisher returned HTTP 200/LIVE. Voice generation itself was working and was not modified. | Automatic restart after new failure or full reboot. |
+| Medium Brain GTX 1080 Ti telemetry | Existing SYSTEM task backed up; boot trigger and repeated one-minute retry verified; task subsequently **launched the GPU publisher without manual intervention**, and HTTP reported GTX 1080 Ti LIVE. Model endpoint remained separately functional. | Cold-start and deliberate unexpected-exit recovery. |
+| Unreal5080 RTX 5080 telemetry | Existing scheduled task backed up, boot trigger and duplicate protection retained, repeated one-minute retry verified; running publisher returned HTTP LIVE. | The publisher started before that retry was added; unattended failure/reboot recovery remains unverified. |
+| MAIN Big Brain startup | Existing Qwen3.8 production model/binary target in the launcher checked; malformed unconditional batch exit corrected; hidden VBS sign-in launcher updated from old Qwen3.6 signature to current Qwen3.8 and backed up. Existing shortcut → VBS → CMD startup chain inspected. The existing desktop GPU FREE/RESTORE path was manually exercised. | Cold start after login, unexpected-crash recovery, and dashboard FREE/RESTORE control acceptance. |
+
+**USER-DECIDED NEXT ACCEPTANCE:** The operator planned to shut down normally and assess the fleet at the next startup. Until that happens, **DO NOT mark reboot persistence or unattended recovery DONE**. The later Watchtower control enhancement is to make safe **MAIN GPU FREE / RESTORE buttons** the primary dashboard controls while preserving the known-good desktop shortcut as a backup until the new route is verified.
+
+**Model / workflow continuity:** MAIN uses the previously promoted Qwen3.8 27B class with its preserved older Qwen3.6 rollback. Herman's currently recorded vision model is **Qwen3.5 9B** (the earlier Qwen3-VL 8B entry is superseded), while the managed creative worker retains the October 31 **R2 exclusive lease** acceptance for automatic MUSIC/PHOTO/VISION tool paths. November 1 Neon 3D/MUSIC operator controls are a separate verified manual UI path; Herman's 3D bridge startup remains manual at the latest checkpoint. Broader model development is ongoing.
+
+**PUBLIC REPOSITORY:** The v0.6.6 README images and five-photo gallery are now published with sanitized project documentation. This does **not** mean the private Control Panel source, credentials, scripts, deployment package or an end-user installer are public.
+
+Older sections below record what was known **at those dates**. For example, a DHCP reservation marked PLANNED in the October 31 section remains historically accurate for that day; November 7's configuration checkpoint supersedes that earlier status.
+
 ## November 1, 2026: Aubum Studio Neon manual creative access — VERIFIED PRIVATE CHECKPOINT
 
 **DONE / USER-OBSERVED:** A single Neon desktop Studio interface on MAIN offers **3D GEN | AUTO | MUSIC**, with AUTO centered, live R2 status and activity. The operator launched the existing Hunyuan3D 2.1 and ACE-Step 1.5 web interfaces on MAIN while the managed GPU worker ran the applications; **3D → AUTO** returned with the R2 lease reported free, and **MUSIC → AUTO** was separately user-confirmed. The separate private Herman companion was reachable. The underlying October 31 automatic R2 cutover remains the accepted baseline.
@@ -304,9 +326,9 @@ A historical private full-system run was reported with (raw execution log not pu
 
 The health checker remains read-only.
 
-## Near-term private prototype roadmap
+## Earlier private prototype backlog (historical, not current priority order)
 
-The current near-term infrastructure backlog is:
+The following list preserves earlier infrastructure ideas and ordering. **Do not treat it as today's user-approved next-action roadmap.** Consult the current private Aubum master checklist and the November 7 reliability checkpoint above before recommending work; storage/Linux and unrelated experiments are not being automatically reprioritized here. Earlier entries remain for continuity:
 
 1. **Storage cleanup and reorganization** before attempting Linux sideloading, so large AI/model/game-development files are intentionally placed instead of being dragged through another operating-system experiment.
 2. **Linux sideloading experiment** after storage is cleaned and free-space/partition requirements are understood.
@@ -315,7 +337,7 @@ The current near-term infrastructure backlog is:
 5. **Generated-image retention cleanup**: keep Open WebUI preview/manual download behavior, then add bounded automatic cleanup of old generated files instead of automatic phone transfer.
 6. **Portable phone bridge** for temporarily attaching a bounded Aubum worker/helper through the phone when using another PC.
 7. **Music/audio expansion** beyond the now-verified song-generation baseline, including sound effects, ambient loops, and game-audio asset workflows.
-8. **Public presentation/promotion pass** with a cleaner architecture diagram, screenshots, and a short reproducible demo of SMALL routing, BIG wake/sleep, web research, and remote mobile access.
+8. **Public presentation/promotion pass**: the **v0.6.6 Watchtower README screenshots and five-image gallery were published November 7 (DONE for that part)**; architecture/demo polish and a short reproducible routing/remote-access demonstration remain separately PLANNED.
 9. **Smarter Memory** with relevance-based recall and selective automatic writes after the current explicit persistent-memory baseline remains stable.
 
 Unreal/character/game-development work remains a separate roadmap so infrastructure tasks do not quietly swallow the game-development checklist.
@@ -335,7 +357,10 @@ Completed:
 - independent monitoring concept documented;
 - persistent-memory architecture documented;
 - public capability and model matrix added;
-- dated October 23 shared-GPU recovery case study added.
+- dated October 23 shared-GPU recovery case study added;
+- dated October 31 R2 lease and voice recovery documentation added;
+- dated November 1 Studio Neon access documentation added;
+- dated November 7 Watchtower v0.6.6 documentation and five screenshot assets added.
 
 In progress:
 
