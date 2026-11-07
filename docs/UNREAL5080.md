@@ -9,8 +9,8 @@ The workstation is intended to carry interactive graphics and content-creation w
 Primary planned responsibilities:
 
 - Unreal Engine development;
-- MetaHuman and Aubum avatar work;
-- Blender and other 3D authoring;
+- MetaHuman / Lewd MetaHuman-based character and Aubum avatar work in Unreal Engine;
+- game-development tooling and interactive 3D iteration;
 - gaming;
 - selected image-generation and video-generation workloads;
 - other GPU-heavy interactive creation tasks.
@@ -66,6 +66,14 @@ Optional follow-up:
 
 - enable Wake-on-LAN for remote power-on.
 
+## November 7, 2026: Fleet monitoring checkpoint
+
+The private Watchtower v0.6.6 captured **LIVE NVIDIA RTX 5080 GPU telemetry** on this workstation. Its existing Windows GPU read-only publisher task retained its **boot trigger and duplicate-instance protection**, and a backed-up **one-minute repeated retry trigger** was verified as installed. The telemetry endpoint was LIVE when checked; it had been running since before the new retry configuration was added.
+
+**PENDING / NOT VERIFIED:** a new cold-start/reboot check, restart of the publisher after a future unexpected termination, and fleet-wide unattended recovery. The newer scheduled retry is not itself proof that the publisher will survive every failure. The existing Sunshine/Moonlight remote access and previously verified headless-boot path were preserved.
+
+The current Unreal character-creation decision uses **MetaHuman / Lewd MetaHuman**, rather than starting a new Blender-based character pipeline. Earlier private Blender automation experiments remain historical; they are not the prescribed path for this workstation's Unreal characters.
+
 ## Security / repository hygiene
 
 Do not store the following in this repository:
@@ -81,4 +89,4 @@ Machine-specific secrets remain outside the public repository.
 
 The workstation exists to separate interactive graphics workloads from primary-model inference.
 
-Rather than replacing MAIN's RTX 4090, the creation workstation provides a second specialized compute/creation node so Unreal, Blender, avatar work, and related tasks do not need to compete directly with the Big Brain for the same GPU and system resources.
+Rather than replacing MAIN's RTX 4090, the creation workstation provides a specialized RTX 5080 node so Unreal Engine development, MetaHuman-based character work, gaming, and interactive creation do not have to compete directly with the Big Brain for MAIN's GPU resources.
