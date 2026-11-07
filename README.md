@@ -373,6 +373,6 @@ The project is currently self-funded and under active development.
 
 ## License
 
-The public Aubum Local Node project is intended to be released under an open-source license.
+The public contents of this repository are licensed under the [Apache License, Version 2.0](LICENSE). This license does not automatically cover separate private Aubum components or model weights.
 
 Pre-existing private Aubum components are not automatically part of this repository or license.
