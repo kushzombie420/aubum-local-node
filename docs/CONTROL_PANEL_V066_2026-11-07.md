@@ -36,12 +36,36 @@ The private implementation and authenticated bridges, scripts, local IPs, access
 
 ## Screenshot selection
 
-Five distinct captures were selected from the operator's uploads. The actual image files are **not yet uploaded to the GitHub repository**; they were supplied as a separate prepared gallery package, so this page deliberately has no broken image links.
+Five distinct, deduplicated operator screenshots were uploaded on November 7, 2026. They show the **observed private v0.6.6 prototype**, not a public installable application. Values are time-specific and some components are explicitly marked UNKNOWN or PARTIAL.
 
-1. **Control Panel Home**: full landing screen, worker health, Creative Studio AUTO state and VRAM bars.
-2. **Watchtower Overview**: per-node VRAM, historical MAIN pressure graph, temperatures and recent alerts.
-3. **GPU & Thermals**: five GPU readings and thermal snapshot, cropped to omit unfinished manual-release controls.
-4. **AI Health**: monitored workers and independent connection checks.
-5. **System Info**: role and resource snapshot.
+### 1. Control Panel Home
+
+Full landing screen with worker health, R2 AUTO/IDLE status, Creative Studio selector, and multi-node GPU memory bars.
+
+![Aubum Control Panel v0.6.6 home dashboard with Creative Studio and GPU worker health](control-panel-home.jpg)
+
+### 2. Watchtower Overview
+
+Read-only fleet overview: GPU VRAM usage, MAIN VRAM pressure history, system temperatures, worker status, and session alerts.
+
+![Watchtower Overview showing five GPU VRAM bars, VRAM history, and system health panels](watchtower-overview.jpg)
+
+### 3. GPU & Thermals
+
+Measured NVIDIA readings across MAIN, Herman, Voicebox, Medium Brain, and Unreal5080; MAIN Ryzen CPU and GPU thermal snapshots. Cropped to leave out the still-unverified manual release controls.
+
+![Watchtower GPU and Thermals displaying RTX and GTX VRAM metrics and live temperature snapshot](gpu-thermals.jpg)
+
+### 4. AI Health
+
+Tracked worker endpoints and the separately scoped Guarddog + Memory report. A green port check means responsive transport, not a validated model inference.
+
+![Watchtower AI Health showing tracked workers, Guarddog and Memory checks, and endpoint responses](worker-health.jpg)
+
+### 5. System Info
+
+Known node roles and measured MAIN utilization, RAM and system-drive storage; network details remain appropriately obscured.
+
+![Watchtower System Info showing MAIN, Herman, known worker nodes, and local system resources](system-info.jpg)
 
 **Next acceptance test:** cold startup and health verification after full shutdown, then separate supervised tests for unexpected service failure and recovery. Only promote release/enable buttons after their safety path is actually tested. Preserve the existing desktop fallback.
