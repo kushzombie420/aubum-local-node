@@ -31,6 +31,9 @@ The goal is to keep verified behavior separate from experiments and future work.
 | Cross-session memory retrieval | MAIN + laptop | Open WebUI Memory tooling | **Verified** |
 | Automatic relevance-based Memory | MAIN + laptop | Planned recall/write layer | **Planned** |
 | Independent system monitoring | Guarddog laptop | Observation-only health monitoring | **Verified** |
+| Watchtower v0.6.6 fleet dashboard | MAIN + GPU fleet | Five NVIDIA GPU telemetry feeds, MAIN CPU thermals, VRAM history and worker status | **WORKING in November 7 user screenshots; reboot verification pending** |
+| LAN reservations | Router + seven private device roles | Configured DHCP reservations for MAIN, Herman, Voicebox, Medium Brain, Guarddog/Memory, Unreal5080 and Steam Deck | **Configured and verified; post-reboot continuity pending** |
+| GPU telemetry startup retry | Voicebox, Medium Brain, Unreal5080 | Existing Windows read-only publisher tasks with retained boot triggers and backed-up one-minute retries | **Configuration verified; Medium auto-launch PASS; fleet recovery unverified** |
 | Full health aggregation | MAIN | Aubum Health Check v0.6; historical private report: 30 PASS / 0 WARN / 0 FAIL (raw log not published) | **Reported private result** |
 | Medium Brain health-check coverage | MAIN + Medium worker | TCP reachability + model/API endpoint checks | **Verified** |
 | Desktop visual observation | MAIN / vision worker | Direct screen capture + vision analysis | **Verified** |
@@ -38,12 +41,14 @@ The goal is to keep verified behavior separate from experiments and future work.
 | Saved visual evidence | MAIN / vision worker | Frames/contact sheets + reinspection | **Verified** |
 | Live phone camera input | Android + vision worker | Phone camera / vision pipeline | **Verified** |
 | Recorded video input | Android + vision worker | Video analysis pipeline | **Verified** |
-| Vision-model workflow | GPU worker | Qwen3-VL 8B-class vision model | **Verified** |
+| Vision-model workflow | Herman RTX 4090 managed GPU worker | Qwen3.5 9B-class vision model (superseded Qwen3-VL 8B) | **Verified private working configuration** |
 | Image generation | GPU worker | ComfyUI-based workflow | **Verified** |
 | Video generation | GPU worker | Local GPU workflow | **Verified** |
 | Blender automation | GPU worker | Remote Blender execution/testing | **Verified** |
 | 3D-generation tooling | GPU worker | Local 3D workflow | **Verified** |
-| Voice / audio specialization | RTX 3070 PC | Dedicated voice/audio worker role | **Verified foundation** |
+| Guarded R2 MUSIC/PHOTO/VISION orchestration | MAIN + managed GPU worker | Exclusive GPU lease, protected contention refusal and previous-mode restoration | **9/9 contention PASS; 3/3 user-path requests PASS (Oct 31)** |
+| Creative Studio Neon access | MAIN + Herman RTX 4090 | 3D GEN / AUTO / MUSIC manual controls using the existing R2 lease boundary | **Private generation and return-to-AUTO observed (Nov 1); unattended restart not verified** |
+| Voice / audio specialization | RTX 3070 PC | Dedicated voice/audio worker role; Open WebUI Read Aloud TTS restored October 31 | **TTS LIVE verified; full STT pipeline still planned** |
 | Full STT -> reasoning -> TTS pipeline | RTX 3070 PC | Planned voice stack | **Planned** |
 | Secure remote mobile access | Android + MAIN | Tailscale + Tailscale Serve + Open WebUI | **Verified** |
 | Tailnet-only remote HTTPS access | MAIN | Tailscale Serve | **Verified** |
@@ -52,16 +57,16 @@ The goal is to keep verified behavior separate from experiments and future work.
 | Storage Librarian / semantic file manager | MAIN + storage | File indexing, classification and move tooling | **Planned** |
 | Generated-media retention cleanup | MAIN + archive storage | Bounded archive/cleanup policy | **Planned** |
 | Worker reboot bootstrap | RTX 4090 GPU worker | Scheduled headless full-worker bootstrap | **Verified** |
-| Headless creation workstation | creation workstation | Sunshine + Moonlight + virtual display | **Verified** |
+| Headless creation workstation | Unreal5080 RTX 5080 workstation | Sunshine + Moonlight + virtual display | **Verified historical headless cold boot; GPU telemetry LIVE Nov 7** |
 | Automatic hardware capability discovery | Future worker nodes | Worker inventory + benchmark reporting | **Planned** |
 | Portable temporary worker bridge | Android + temporary PC | Bounded remote worker bootstrap | **Planned** |
-| Manual shared-GPU selection | MAIN + RTX 4090 GPU worker | Operator-directed MUSIC (standard ACE-Step 1.5), PHOTO (Qwen Image 2.1), and VISION; partial transition matrix verified | **Live verified privately, supervised (Oct 23)** |
+| Manual shared-GPU selection | MAIN + RTX 4090 GPU worker | Operator-directed MUSIC (standard ACE-Step 1.5), PHOTO (Qwen Image 2.1), and VISION; partial transition matrix verified | **Historical supervised checkpoint (Oct 23); R2 guarded auto path verified Oct 31** |
 | Music / audio generation (active MUSIC mode) | RTX 4090 GPU worker | Standard ACE-Step 1.5 through preserved legacy backend; audio generated through Open WebUI | **Live verified privately (Oct 23)** |
 | ACE-Step XL Turbo (earlier managed tests) | RTX 4090 GPU worker | Authenticated managed transport; 10–600 s source range; live 120 s and 600 s deliveries | **Historical live verification; protected startup deferred** |
 
 ## Music-generation verification — private prototype
 
-As of October 23, 2026, the active operator-selected **MUSIC** mode uses standard ACE-Step 1.5 through the preserved legacy backend. Real audio was generated locally and through Open WebUI. The GPU worker's **PHOTO** and **VISION** modes are selected explicitly from MAIN; this is supervised manual operation, not automatic handoff.
+**Historical October 23 checkpoint:** Operator-selected **MUSIC** mode used the preserved standard ACE-Step 1.5 backend, with real audio produced locally and through Open WebUI. PHOTO and VISION were switched manually from MAIN at that checkpoint. **Current later evidence:** the October 31 private R2 cutover verified exclusive GPU leasing and three sequential real chat requests across MUSIC, PHOTO and VISION without manual mode selection; this does not assert that every legacy caller or concurrency scenario was verified. The November 1 Neon UI separately verified supervised 3D/MUSIC access and normal returns through AUTO.
 
 Earlier private tests separately verified ACE-Step 1.5 **XL Turbo** through an authenticated managed transport. The following results are historical, not evidence that protected XL Turbo startup is active in the recovered October 23 configuration:
 
@@ -82,7 +87,7 @@ The private prototype intentionally uses different model sizes for different job
 | Primary Big Brain | Qwen3.8 27B-class Q4_K_P GGUF | Main reasoning, coding, synthesis, complex requests |
 | Medium Brain | Qwen3.5 9B-class Q6_K GGUF | Intermediate conversational/contextual reasoning without waking the primary 27B |
 | Steam Deck router | Qwen3 1.7B-class | Cheap classification/routing without occupying the primary GPU |
-| Vision | Qwen3-VL 8B-class | Image, camera, and saved-evidence inspection |
+| Vision | Qwen3.5 9B-class on Herman | Image, camera, and saved-evidence inspection; earlier Qwen3-VL 8B is historical |
 | Phone edge model | Qwen3 4B-class | Lightweight local mobile inference and edge experiments |
 | Turn supervision / support model | Local Ollama model | Auxiliary control/supervision work where a second large reasoning pass is unnecessary |
 
@@ -129,16 +134,17 @@ The phone itself is intentionally not required to be online for infrastructure h
 | Device class | Current responsibility |
 |---|---|
 | MAIN RTX 4090 system | Primary reasoning, orchestration, Open WebUI, system control, health aggregation |
-| GPU worker RTX 4090 system | Vision, Blender, 3D, image/video generation, local music generation, rendering, heavy GPU execution |
-| RTX 3070 PC | Voice and audio specialization |
+| Herman GPU worker RTX 4090 system | Qwen3.5 9B-class vision, legacy Blender automation, 3D, image/video generation, music, rendering and other heavy GPU execution |
+| Voicebox RTX 3070 PC | Voice and audio specialization, including verified Read Aloud TTS |
 | Steam Deck | Lightweight model-based routing |
-| GTX 1080 Ti Medium Brain worker | Intermediate Qwen3.5 9B-class reasoning with 16K context |
+| GTX 1080 Ti Medium Brain worker | Intermediate Qwen3.5 9B-class reasoning with 16K context; November 7 GPU publisher auto-launched |
 | Laptop | Independent Guarddog monitoring + persistent Memory |
+| Unreal5080 RTX 5080 workstation | Unreal Engine and MetaHuman-based characters, gaming, remote Sunshine/Moonlight and observed GPU telemetry |
 | Android phone | Remote control, local edge inference, camera/video input, secure cellular access |
 
 ## Near-term direction
 
-The next private-prototype priorities are intentionally practical:
+**Historical backlog snapshot, not the present master-checklist order.** The current user-controlled project roadmap and status of each item must be checked against the authoritative Aubum checklist before treating any line here as the next task. November 7 updates prioritized persistence and a public Watchtower demonstration; the fleet cold-start test remains pending. Earlier items are retained for continuity, not reissued as tasks:
 
 1. storage cleanup and reorganization;
 2. Linux sideloading after storage is understood;
@@ -148,7 +154,7 @@ The next private-prototype priorities are intentionally practical:
 6. Storage Librarian / semantic file management;
 7. portable temporary-worker experiments;
 8. smarter automatic Memory;
-9. public demos, screenshots, diagrams, and reproducible examples.
+9. public demos, screenshots, diagrams, and reproducible examples (**v0.6.6 screenshot gallery and README presentation completed Nov 7; reproducible standalone public demo still pending**).
 
 ## Public-project boundary
 
