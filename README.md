@@ -4,6 +4,18 @@ Aubum Local Node is an open-source project exploring how ordinary consumer PCs, 
 
 The project grew out of Aubum, a working private AI orchestration prototype that I am developing independently.
 
+## November 7, 2026: Aubum Control Panel v0.6.6 / Watchtower — private prototype
+
+The **Aubum Control Panel v0.6.6** is an operational dark-mode interface for the private, local-first Aubum fleet. It combines a home dashboard and **Watchtower** monitoring views with the existing **Creative Studio** mode selector. The latest operator-supplied screenshots show live readings from **MAIN (RTX 4090), Herman (RTX 4090), Voicebox (RTX 3070), Medium Brain (GTX 1080 Ti), and Unreal5080 (RTX 5080)**.
+
+The interface includes **Overview, System Info, AI Health, GPU & Thermals, Events, and Settings & Tools**. Observed functions include per-node GPU VRAM readings, MAIN CPU/GPU thermal snapshots, remote GPU temperatures, a recent MAIN VRAM-pressure history chart, observed model/port status, Guarddog + Memory health, and read-only event history. Creative Studio exposes the pre-existing **3D GEN / AUTO / MUSIC** workflow with its R2 mode/lease status.
+
+**Verified in the November 7 session:** the dashboard displayed live telemetry for five GPUs; the Guarddog/Memory health snapshot reported 2/2 healthy; the MAIN and Medium model endpoints reported ready; the UI showed the connected Herman 3D bridge; and the operator repaired existing GPU telemetry task retry scheduling on Voicebox, Medium Brain, and Unreal5080. Medium Brain subsequently **restarted its GPU telemetry through Windows Task Scheduler without a manual start**. MAIN's existing Big Brain sign-in launcher and hidden script were patched to match the current Qwen3.8 production model, with rollback backups. These are **private-system observations**, not a public installer or comprehensive end-to-end reliability certification.
+
+**Still pending verification:** full shutdown/reboot persistence for the fleet, unexpected-publisher-exit recovery across all nodes, MAIN Big Brain startup/hold behavior after login, and fleet-wide GPU release controls. The screenshots also show **partial/limited monitoring coverage**, transient UNKNOWN events, and **work-in-progress Manual GPU Release UI**; these are not represented as completed features. The existing manual MAIN FREE/RESTORE control path was separately exercised, but dashboard-based control is not yet a verified replacement. The desktop shortcut remains the retained fallback.
+
+**Publishing boundary:** This public repository documents the private implementation. It does **not** publish authenticated bridges, local control scripts, configuration files, secrets, machine IPs, or deployable v0.6.6 binaries. See [Control Panel v0.6.6 screenshot guide and verification snapshot](docs/CONTROL_PANEL_V066_2026-11-07.md) for screenshot descriptions and limitations.
+
 ## Project Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
